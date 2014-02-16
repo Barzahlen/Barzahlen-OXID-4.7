@@ -38,7 +38,7 @@ $aModule = array(
   ),
   'lang' => 'de',
   'thumbnail'    => 'barzahlen-logo.png',
-  'version'      => '1.1.0',
+  'version'      => '1.1.1',
   'author'       => 'Zerebro Internet GmbH',
   'url'          => 'http://www.barzahlen.de',
   'email'        => 'support@barzahlen.de',

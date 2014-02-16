@@ -1,3 +1,6 @@
+==1.1.1 (14.11.2012)==
+* restructured files and updated metadata.php
+
 ==1.1.0 (01.11.2012)==
 * implemented new api geocoding feature to get the closest points of sales
 * reduced the maximum amount to 999.99 Euros
