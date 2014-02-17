@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/
  *
- * @copyright   Copyright (c) 2012 Zerebro Internet GmbH (http://www.barzahlen.de)
+ * @copyright   Copyright (c) 2013 Zerebro Internet GmbH (http://www.barzahlen.de)
  * @author      Alexander Diebler
  * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  */
@@ -28,5 +28,7 @@ require_once('request_payment.php');
 require_once('request_refund.php');
 require_once('request_resend.php');
 require_once('request_update.php');
+require_once('request_cancel.php');
 require_once('exception.php');
 require_once('notification.php');
+require_once('version_check.php');

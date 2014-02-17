@@ -181,56 +181,6 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
   }
 
   /**
-   * Test updating a pending transaction with an invalid paid notification.
-   */
-  public function testUpdatePaymentWrongAmount() {
-
-    $_GET = array('state' => 'paid',
-                  'transaction_id' => '27767255',
-                  'shop_id' => '10000',
-                  'customer_email' => 'mustermann@barzahlen.de',
-                  'amount' => '19.99',
-                  'currency' => 'EUR',
-                  'order_id' => '1',
-                  'customer_var_0' => '',
-                  'customer_var_1' => '',
-                  'customer_var_2' => '',
-                  'hash' => 'b9f3c75a76acaa12d4d49d488bfe6ab0028ef324139470cfa6884d705a3af474f4f828ac2322175d66f430b1109c96f451ea559921ef6a3d99d235f8c6a4e131');
-
-    $this->oUpdateHandler->checkData($_GET);
-    $this->assertFalse($this->oUpdateHandler->updatePayment());
-
-    $oOrder = new oxOrder;
-    $oOrder->load('2a289076590d790c6d50aabd6f5974eb');
-    $this->assertEquals('pending', $oOrder->oxorder__bzstate->rawValue);
-  }
-
-  /**
-   * Test updating a pending transaction with an invalid paid notification.
-   */
-  public function testUpdatePaymentWrongCurrency() {
-
-    $_GET = array('state' => 'paid',
-                  'transaction_id' => '27767255',
-                  'shop_id' => '10000',
-                  'customer_email' => 'mustermann@barzahlen.de',
-                  'amount' => '25.9',
-                  'currency' => 'USD',
-                  'order_id' => '1',
-                  'customer_var_0' => '',
-                  'customer_var_1' => '',
-                  'customer_var_2' => '',
-                  'hash' => '3688c754ea79e47e70d288fb8748d80bf23debd01e7617014cce9933dc225ac5a193f01a286a51b7992835d283ce9cfd62102219c63ed71c3c6f09d008ff331c');
-
-    $this->oUpdateHandler->checkData($_GET);
-    $this->assertFalse($this->oUpdateHandler->updatePayment());
-
-    $oOrder = new oxOrder;
-    $oOrder->load('2a289076590d790c6d50aabd6f5974eb');
-    $this->assertEquals('pending', $oOrder->oxorder__bzstate->rawValue);
-  }
-
-  /**
    * Test updating a paid transaction with a valid paid notification.
    */
   public function testUpdatePaymentAgainstPaid() {
@@ -371,70 +321,6 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_1' => '',
                   'customer_var_2' => '',
                   'hash' => 'a1171147f27d93252626dc74733ad46fe79e52f7d3d4a656b0738b989c0cc21a80bd25b2ad7ca92bd6d51adcd16f3fe2c7fd3d6b3d0f1c48fca3faf117e5f3b8');
-
-    $this->oUpdateHandler->checkData($_GET);
-    $this->assertFalse($this->oUpdateHandler->updateRefund());
-
-    $oOrder = new oxOrder;
-    $oOrder->load('6988a7466abe756b93c1f0b2b11af7d3');
-    $aRefundData = unserialize(str_replace("&quot;", "\"", $oOrder->oxorder__bzrefunds->value));
-    foreach($aRefundData as $aRefund) {
-      if($aRefund['refundid'] == '27828393') {
-        $this->assertEquals('pending', $aRefund['state']);
-      }
-    }
-  }
-
-  /**
-   * Test updating a pending refund transaction with an invalid refund_completed
-   * notification.
-   */
-  public function testUpdateRefundWrongAmount() {
-
-    $_GET = array('state' => 'refund_completed',
-                  'refund_transaction_id' => '27828393',
-                  'origin_transaction_id' => '27767585',
-                  'shop_id' => '10000',
-                  'customer_email' => 'mustermann@barzahlen.de',
-                  'amount' => '50',
-                  'currency' => 'EUR',
-                  'origin_order_id' => '5',
-                  'customer_var_0' => '',
-                  'customer_var_1' => '',
-                  'customer_var_2' => '',
-                  'hash' => 'dbfd4cf01b929f26cdef7cc29b929bbe850b107b1a44acb07279b894b965c4c72ac21a6dc6b290c4e0e05ec9882d64bd7f382233dcdfe845f5026040ff666985');
-
-    $this->oUpdateHandler->checkData($_GET);
-    $this->assertFalse($this->oUpdateHandler->updateRefund());
-
-    $oOrder = new oxOrder;
-    $oOrder->load('6988a7466abe756b93c1f0b2b11af7d3');
-    $aRefundData = unserialize(str_replace("&quot;", "\"", $oOrder->oxorder__bzrefunds->value));
-    foreach($aRefundData as $aRefund) {
-      if($aRefund['refundid'] == '27828393') {
-        $this->assertEquals('pending', $aRefund['state']);
-      }
-    }
-  }
-
-  /**
-   * Test updating a pending refund transaction with an invalid refund_completed
-   * notification.
-   */
-  public function testUpdateRefundWrongCurrency() {
-
-    $_GET = array('state' => 'refund_completed',
-                  'refund_transaction_id' => '27828393',
-                  'origin_transaction_id' => '27767585',
-                  'shop_id' => '10000',
-                  'customer_email' => 'mustermann@barzahlen.de',
-                  'amount' => '22',
-                  'currency' => 'USD',
-                  'origin_order_id' => '5',
-                  'customer_var_0' => '',
-                  'customer_var_1' => '',
-                  'customer_var_2' => '',
-                  'hash' => '2df694df69077e581384eb19f7d4a18d8937cec2681056315ca5195d20f35e394d82febf59de859a81373305da1f2149442309ce320a9e697b737ba85ea87382');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertFalse($this->oUpdateHandler->updateRefund());

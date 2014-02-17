@@ -1,5 +1,5 @@
 ==Title==
-Barzahlen Payment Module (OXID eShop 4.7.X)
+Barzahlen Payment Module (OXID eShop 4.7 / 5.0)
 
 ==Author==
 Zerebro Internet GmbH
@@ -8,7 +8,7 @@ Zerebro Internet GmbH
 bz
 
 ==Version==
-1.1.3
+1.1.4
 
 ==Link==
 http://www.barzahlen.de
@@ -32,6 +32,11 @@ Integrates Barzahlen payment solution into OXID eShop.
 
 *oxorder
 --finalizeOrder
+--cancelOrder
+--delete
+
+*navigation
+--_doStartUpChecks
 
 ==Installation==
 * copy contents from copy_this directory into the shop root

@@ -1,3 +1,9 @@
+==1.1.4 (15.05.2013)==
+* updated Barzahlen PHP API SDK
+* added automatic payment slip cancelation on order cancelation
+* automatic plugin version check once a week
+* PSR2 coding standard
+
 ==1.1.3 (11.03.2013)==
 * remaining transaction amounts under 0.50 Euros can now be refunded
 * added prefix to module and classes names
