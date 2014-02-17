@@ -24,10 +24,10 @@
 $sLangName = 'English';
 $aLang = array(
   'charset' => 'UTF-8',
-  'BARZAHLEN__PAGE_CHECKOUT_PAYMENT_DESC' => '<br/>After completing your order you get a payment slip from Barzahlen that you can easily print out or have it sent via SMS to your mobile phone. With the help of that payment slip you can pay your online purchase at one of our retail partners (e.g. supermarket).<br/><br/>',
-  'BARZAHLEN__PAGE_CHECKOUT_PAYMENT_SANDBOX' => 'The <strong>Sandbox Mode</strong> is active. All placed orders receive a test payment slip. Test payment slips cannot be handled by our retail partners.<br/><br/>',
-  'BARZAHLEN__PAGE_CHECKOUT_PAYMENT_OUR_PARTNER' => '<strong>A selection of our partners:</strong>',
-  'BARZAHLEN__PAGE_CHECKOUT_PAYMENT_ERROR' => 'Payment via Barzahlen was unfortunately not possible. Please try again or select another payment method.',
-  'BARZAHLEN__PAGE_CHECKOUT_THANKYOU_TITLE' => 'Simple and secure online payment'
+  'BZ__PAGE_CHECKOUT_PAYMENT_DESC' => '<br/>After completing your order you get a payment slip from Barzahlen that you can easily print out or have it sent via SMS to your mobile phone. With the help of that payment slip you can pay your online purchase at one of our retail partners (e.g. supermarket).<br/><br/>',
+  'BZ__PAGE_CHECKOUT_PAYMENT_SANDBOX' => 'The <strong>Sandbox Mode</strong> is active. All placed orders receive a test payment slip. Test payment slips cannot be handled by our retail partners.<br/><br/>',
+  'BZ__PAGE_CHECKOUT_PAYMENT_OUR_PARTNER' => '<strong>Pay at:</strong>',
+  'BZ__PAGE_CHECKOUT_PAYMENT_ERROR' => 'Payment via Barzahlen was unfortunately not possible. Please try again or select another payment method.',
+  'BZ__PAGE_CHECKOUT_THANKYOU_TITLE' => 'Simple and secure online payment'
 );
 ?>

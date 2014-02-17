@@ -21,57 +21,37 @@
  * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  */
 
+/**
+ * ThankYou View Controller Extension
+ * If Barzahlen was choosen the payment slip information will be added to the
+ * final checkout success page.
+ */
 class barzahlen_thankyou extends barzahlen_thankyou_parent {
 
-  protected $_paymentSlipLink;
-  protected $_expirationNotice;
-  protected $_infotextOne;
-  protected $_infotextTwo;
+  /**
+   * Additional Information Text 1.
+   *
+   * @var string
+   */
+  protected $_sInfotextOne;
 
   /**
+   * Executes parent method parent::render().
    * Grabs the payment information from the session.
    */
-  public function init()
-  {
-    parent::init();
+  public function init() {
 
-    $this->_paymentSlipLink = oxSession::getVar('barzahlenPaymentSlipLink');
-    $this->_expirationNotice = oxSession::getVar('barzahlenExpirationNotice');
-    $this->_infotextOne = oxSession::getVar('barzahlenInfotextOne');
-    $this->_infotextTwo = oxSession::getVar('barzahlenInfotextTwo');
+    parent::init();
+    $this->_sInfotextOne = oxSession::getVar('barzahlenInfotextOne');
   }
 
   /**
    * Executes parent method parent::render() and unsets session variables.
-   *
-   * @extend render
    */
   public function render() {
 
-    oxSession::deleteVar( 'barzahlenPaymentSlipLink' );
-    oxSession::deleteVar( 'barzahlenExpirationNotice' );
     oxSession::deleteVar( 'barzahlenInfotextOne' );
-    oxSession::deleteVar( 'barzahlenInfotextTwo' );
-
     return parent::render();
-  }
-
-  /**
-   * Returns the payment slip link.
-   *
-   * @return string with payment slip link
-   */
-  public function getPaymentSlipLink() {
-    return $this->_paymentSlipLink;
-  }
-
-  /**
-   * Returns the expiration notice.
-   *
-   * @return string with expiration notice
-   */
-  public function getExpirationNotice() {
-    return $this->_expirationNotice;
   }
 
   /**
@@ -80,15 +60,6 @@ class barzahlen_thankyou extends barzahlen_thankyou_parent {
    * @return string with infotext 1
    */
   public function getInfotextOne() {
-    return $this->_infotextOne;
-  }
-
-  /**
-   * Returns the infotext 2.
-   *
-   * @return string with infotext 2
-   */
-  public function getInfotextTwo() {
-    return $this->_infotextTwo;
+    return $this->_sInfotextOne;
   }
 }

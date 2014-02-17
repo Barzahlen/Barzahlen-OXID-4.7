@@ -23,18 +23,37 @@
 
 require_once getShopBasePath() . 'modules/barzahlen/api/loader.php';
 
+/**
+ * Extends Payment Gateway
+ * Prepares and performs the payment request in order the receive the payment
+ * slip for the customer. Recieved information are saved along with the order.
+ */
 class barzahlen_payment_gateway extends barzahlen_payment_gateway_parent {
 
-  protected $_sLastError = "barzahlen";
-  protected $_sModuleId = "barzahlen";
+  /**
+   * Log file
+   */
   const LOGFILE = "barzahlen.log";
+
+ /**
+   * Module identifier
+   *
+   * @var string
+   */
+  protected $_sModuleId = 'barzahlen';
+
+ /**
+   * Last error source
+   *
+   * @var string
+   */
+  protected $_sLastError = "barzahlen";
 
   /**
    * Executes payment, returns true on success.
    *
    * @param double $dAmount Goods amount
    * @param object &$oOrder User ordering object
-   *
    * @return bool
    */
   public function executePayment($dAmount, &$oOrder) {
@@ -43,33 +62,24 @@ class barzahlen_payment_gateway extends barzahlen_payment_gateway_parent {
       return parent::executePayment($dAmount, $oOrder);
     }
 
-    $country = oxNew("oxcountry");
-    $country->load($oOrder->oxorder__oxbillcountryid->rawValue);
+    $oCountry = oxNew("oxcountry");
+    $oCountry->load($oOrder->oxorder__oxbillcountryid->rawValue);
 
-    $api = $this->_getBarzahlenApi($oOrder);
+    $sCustomerEmail = $oOrder->oxorder__oxbillemail->rawValue;
+    $sCustomerStreetNr = $oOrder->oxorder__oxbillstreet->rawValue .' '. $oOrder->oxorder__oxbillstreetnr->rawValue;
+    $sCustomerZipcode = $oOrder->oxorder__oxbillzip->rawValue;
+    $sCustomerCity = $oOrder->oxorder__oxbillcity->rawValue;
+    $sCustomerCountry = $oCountry->oxcountry__oxisoalpha2->rawValue;
+    $dAmount = $oOrder->oxorder__oxtotalordersum->value;
+    $sCurrency = $oOrder->oxorder__oxcurrency->rawValue;
 
-    $customerEmail = $oOrder->oxorder__oxbillemail->rawValue;
-    $customerStreetNr = $oOrder->oxorder__oxbillstreet->rawValue .' '. $oOrder->oxorder__oxbillstreetnr->rawValue;
-    $customerZipcode = $oOrder->oxorder__oxbillzip->rawValue;
-    $customerCity = $oOrder->oxorder__oxbillcity->rawValue;
-    $customerCountry = $country->oxcountry__oxisoalpha2->rawValue;
-    $amount = $oOrder->oxorder__oxtotalordersum->value;
-    $currency = $oOrder->oxorder__oxcurrency->rawValue;
-    $payment = new Barzahlen_Request_Payment($customerEmail, $customerStreetNr, $customerZipcode, $customerCity, $customerCountry, $amount, $currency);
+    $oRequest = new Barzahlen_Request_Payment($sCustomerEmail, $sCustomerStreetNr, $sCustomerZipcode, $sCustomerCity, $sCustomerCountry, $dAmount, $sCurrency);
+    $oPayment = $this->_connectBarzahlenApi($oRequest, $oOrder->getOrderLanguage());
 
-    try {
-      $api->handleRequest($payment);
-    }
-    catch (Exception $e) {
-      oxUtils::getInstance()->writeToLog(date('c') . " Transaction/Create failed: " . $e . "\r\r", self::LOGFILE);
-    }
-
-    if($payment->isValid()) {
-      oxSession::setVar('barzahlenPaymentSlipLink', (string)$payment->getPaymentSlipLink());
-      oxSession::setVar('barzahlenExpirationNotice', (string)$payment->getExpirationNotice());
-      oxSession::setVar('barzahlenInfotextOne', (string)$payment->getInfotext1());
-      oxSession::setVar('barzahlenInfotextTwo', (string)$payment->getInfotext2());
-      $oOrder->oxorder__bztransaction = new oxField((int)$payment->getTransactionId());
+    if($oPayment->isValid()) {
+      oxSession::setVar('barzahlenPaymentSlipLink', (string)$oPayment->getPaymentSlipLink());
+      oxSession::setVar('barzahlenInfotextOne', (string)$oPayment->getInfotext1());
+      $oOrder->oxorder__bztransaction = new oxField((int)$oPayment->getTransactionId());
       $oOrder->oxorder__bzstate = new oxField('pending');
       $oOrder->save();
       return true;
@@ -80,40 +90,61 @@ class barzahlen_payment_gateway extends barzahlen_payment_gateway_parent {
   }
 
   /**
+   * Performs the api request.
+   *
+   * @param Barzahlen_Request $oRequest request object
+   * @param integer $iOrderLang order language id
+   * @return updated request object
+   */
+  protected function _connectBarzahlenApi($oRequest, $iOrderLang) {
+
+    $oApi = $this->_getBarzahlenApi($iOrderLang);
+
+    try {
+      $oApi->handleRequest($oRequest);
+    }
+    catch (Exception $e) {
+      oxUtils::getInstance()->writeToLog(date('c') . " API/Refund failed: " . $e . "\r\r", self::LOGFILE);
+    }
+
+    return $oRequest;
+  }
+
+  /**
    * Prepares a Barzahlen API object for the payment request.
    *
-   * @param object $oOrder User ordering object
+   * @param integer $iOrderLang order language id
    * @return Barzahlen_Api
    */
-  protected function _getBarzahlenApi($oOrder) {
+  protected function _getBarzahlenApi($iOrderLang) {
 
     $oxConfig = oxConfig::getInstance();
     $sShopId = $oxConfig->getShopId();
     $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
 
-    $shopId = $oxConfig->getShopConfVar('shopId', $sShopId, $sModule);
-    $paymentKey = $oxConfig->getShopConfVar('paymentKey', $sShopId, $sModule);
-    $sandbox = $oxConfig->getShopConfVar('sandbox', $sShopId, $sModule);
-    $debug = $oxConfig->getShopConfVar('debug', $sShopId, $sModule);
+    $sBzShopId = $oxConfig->getShopConfVar('bzShopId', $sShopId, $sModule);
+    $sPaymentKey = $oxConfig->getShopConfVar('bzPaymentKey', $sShopId, $sModule);
+    $blSandbox = $oxConfig->getShopConfVar('bzSandbox', $sShopId, $sModule);
+    $blDebug = $oxConfig->getShopConfVar('bzDebug', $sShopId, $sModule);
 
-    $api = new Barzahlen_Api($shopId, $paymentKey, $sandbox);
-    $api->setDebug($debug, self::LOGFILE);
-    $api->setLanguage($this->_getOrderLanguage($oOrder));
-    return $api;
+    $oApi = new Barzahlen_Api($sBzShopId, $sPaymentKey, $blSandbox);
+    $oApi->setDebug($blDebug, self::LOGFILE);
+    $oApi->setLanguage($this->_getOrderLanguage($iOrderLang));
+    return $oApi;
   }
 
   /**
    * Gets the order language code.
    *
-   * @param object $oOrder User ordering object
+   * @param integer $iOrderLang order language id
    * @return string
    */
-  protected function _getOrderLanguage($oOrder) {
+  protected function _getOrderLanguage($iOrderLang) {
 
     $oxConfig = oxConfig::getInstance();
-    $lgConfig = $oxConfig->getShopConfVar('aLanguageParams');
+    $aLgConfig = $oxConfig->getShopConfVar('aLanguageParams');
 
-    return array_search($oOrder->getOrderLanguage(), $lgConfig);
+    return array_search($iOrderLang, $aLgConfig);
   }
 }
 ?>

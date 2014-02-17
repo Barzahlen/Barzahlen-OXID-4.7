@@ -33,12 +33,12 @@ $aModule = array(
   'id'           => 'barzahlen',
   'title'        => 'Barzahlen',
   'description'  => array(
-    'de' => 'Barzahlen bietet Ihren Kunden die Möglichkeit, online bar zu bezahlen. Sie werden in Echtzeit über die Zahlung benachrichtigt und profitieren von voller Zahlungsgarantie und neuen Kundengruppen. Sehen Sie wie Barzahlen funktioniert: <a href="http://www.barzahlen.de/partner/funktionsweise" target="_blank" style="color: #63A924;">http://www.barzahlen.de/partner/funktionsweise</a>',
+    'de' => 'Barzahlen bietet Ihren Kunden die M&ouml;glichkeit, online bar zu bezahlen. Sie werden in Echtzeit &uuml;ber die Zahlung benachrichtigt und profitieren von voller Zahlungsgarantie und neuen Kundengruppen. Sehen Sie wie Barzahlen funktioniert: <a href="http://www.barzahlen.de/partner/funktionsweise" target="_blank" style="color: #63A924;">http://www.barzahlen.de/partner/funktionsweise</a>',
     'en' => 'Barzahlen let\'s your customers pay cash online. You get a payment confirmation in real-time and you benefit from our payment guarantee and new customer groups. See how Barzahlen works: <a href="http://www.barzahlen.de/partner/funktionsweise" target="_blank" style="color: #63A924;">http://www.barzahlen.de/partner/funktionsweise</a>'
   ),
   'lang' => 'de',
   'thumbnail'    => 'barzahlen-logo.png',
-  'version'      => '1.1.1',
+  'version'      => '1.1.2',
   'author'       => 'Zerebro Internet GmbH',
   'url'          => 'http://www.barzahlen.de',
   'email'        => 'support@barzahlen.de',
@@ -50,7 +50,8 @@ $aModule = array(
   ),
   'files' => array(
     'barzahlen_callback' => 'barzahlen/controllers/barzahlen_callback.php',
-    'barzahlen_transactions' => 'barzahlen/controllers/barzahlen_transactions.php'
+    'barzahlen_transactions' => 'barzahlen/controllers/barzahlen_transactions.php',
+    'barzahlen_update_handler' => 'barzahlen/models/barzahlen_update_handler.php'
   ),
   'blocks'       => array(
     array('template' => 'page/checkout/payment.tpl',  'block' => 'select_payment',          'file' => 'out/blocks/page/checkout/payment/select_payment'),
@@ -58,11 +59,11 @@ $aModule = array(
     array('template' => 'page/checkout/thankyou.tpl', 'block' => 'checkout_thankyou_info',  'file' => 'out/blocks/page/checkout/thankyou/checkout_thankyou_info')
   ),
   'settings'     => array(
-    array('group' => 'main', 'name' => 'sandbox',         'type' => 'bool', 'value' => 'false'),
-    array('group' => 'main', 'name' => 'shopId',          'type' => 'str',  'value' => ''),
-    array('group' => 'main', 'name' => 'paymentKey',      'type' => 'str',  'value' => ''),
-    array('group' => 'main', 'name' => 'notificationKey', 'type' => 'str',  'value' => ''),
-    array('group' => 'main', 'name' => 'debug',           'type' => 'bool', 'value' => 'false')
+    array('group' => 'main', 'name' => 'bzSandbox',         'type' => 'bool', 'value' => 'false'),
+    array('group' => 'main', 'name' => 'bzShopId',          'type' => 'str',  'value' => ''),
+    array('group' => 'main', 'name' => 'bzPaymentKey',      'type' => 'str',  'value' => ''),
+    array('group' => 'main', 'name' => 'bzNotificationKey', 'type' => 'str',  'value' => ''),
+    array('group' => 'main', 'name' => 'bzDebug',           'type' => 'bool', 'value' => 'false')
   ),
   'templates' => array(
     'barzahlen_transactions.tpl' => 'barzahlen/out/admin/tpl/barzahlen_transactions.tpl'

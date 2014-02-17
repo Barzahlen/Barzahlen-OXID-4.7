@@ -23,10 +23,23 @@
 
 require_once getShopBasePath() . 'modules/barzahlen/api/loader.php';
 
+/**
+ * Extends Order manager
+ * Adds Barzahlen payment information to order on finalization.
+ */
 class barzahlen_order extends barzahlen_order_parent {
 
-  protected $_sModuleId = "barzahlen";
+  /**
+   * Log file
+   */
   const LOGFILE = "barzahlen.log";
+
+ /**
+   * Module identifier
+   *
+   * @var string
+   */
+  protected $_sModuleId = 'barzahlen';
 
   /**
    * Expands order finalization for Barzahlen payments to update transaction with order id.
@@ -39,24 +52,35 @@ class barzahlen_order extends barzahlen_order_parent {
    */
   public function finalizeOrder( oxBasket $oBasket, $oUser, $blRecalculatingOrder = false ) {
 
-    $parent = parent::finalizeOrder($oBasket, $oUser, $blRecalculatingOrder);
+    $iParent = parent::finalizeOrder($oBasket, $oUser, $blRecalculatingOrder);
 
     if ($this->oxorder__oxpaymenttype->value == 'oxidbarzahlen') {
-      $transactionId = $this->oxorder__bztransaction->value;
-      $orderId = $this->oxorder__oxordernr->value;
 
-      $api = $this->_getBarzahlenApi();
-      $update = new Barzahlen_Request_Update($transactionId, $orderId);
+      $sTransactionId = $this->oxorder__bztransaction->value;
+      $sOrderId = $this->oxorder__oxordernr->value;
 
-      try {
-        $api->handleRequest($update);
-      }
-      catch (Exception $e) {
-        oxUtils::getInstance()->writeToLog(date('c') . " Order ID update failed: " . $e . "\r\r", self::LOGFILE);
-      }
+      $oRequest = new Barzahlen_Request_Update($sTransactionId, $sOrderId);
+      $this->_connectBarzahlenApi($oRequest);
     }
 
-    return $parent;
+    return $iParent;
+  }
+
+  /**
+   * Performs the api request.
+   *
+   * @param Barzahlen_Request $oRequest request object
+   */
+  protected function _connectBarzahlenApi($oRequest) {
+
+    $oApi = $this->_getBarzahlenApi();
+
+    try {
+      $oApi->handleRequest($oRequest);
+    }
+    catch (Exception $e) {
+      oxUtils::getInstance()->writeToLog(date('c') . " Order ID update failed: " . $e . "\r\r", self::LOGFILE);
+    }
   }
 
   /**
@@ -70,14 +94,14 @@ class barzahlen_order extends barzahlen_order_parent {
     $sShopId = $oxConfig->getShopId();
     $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
 
-    $shopId = $oxConfig->getShopConfVar('shopId', $sShopId, $sModule);
-    $paymentKey = $oxConfig->getShopConfVar('paymentKey', $sShopId, $sModule);
-    $sandbox = $oxConfig->getShopConfVar('sandbox', $sShopId, $sModule);
-    $debug = $oxConfig->getShopConfVar('debug', $sShopId, $sModule);
+    $sBzShopId = $oxConfig->getShopConfVar('bzShopId', $sShopId, $sModule);
+    $sPaymentKey = $oxConfig->getShopConfVar('bzPaymentKey', $sShopId, $sModule);
+    $blSandbox = $oxConfig->getShopConfVar('bzSandbox', $sShopId, $sModule);
+    $blDebug = $oxConfig->getShopConfVar('bzDebug', $sShopId, $sModule);
 
-    $api = new Barzahlen_Api($shopId, $paymentKey, $sandbox);
-    $api->setDebug($debug, self::LOGFILE);
-    return $api;
+    $oApi = new Barzahlen_Api($sBzShopId, $sPaymentKey, $blSandbox);
+    $oApi->setDebug($blDebug, self::LOGFILE);
+    return $oApi;
   }
 }
 ?>

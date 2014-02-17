@@ -21,14 +21,22 @@
  * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  */
 
+/**
+ * Payment View Controller Extension
+ * Integrates the Barzahlen payment method information for the payment
+ * selection page depending on sandbox setting.
+ */
 class barzahlen_payment extends barzahlen_payment_parent {
 
+  /**
+   * Module identifier
+   *
+   * @var string
+   */
   protected $_sModuleId = "barzahlen";
 
   /**
    * Executes parent method parent::render().
-   *
-   * @extend render
    */
   public function render() {
 
@@ -45,7 +53,7 @@ class barzahlen_payment extends barzahlen_payment_parent {
     $oxConfig = oxConfig::getInstance();
     $sShopId = $oxConfig->getShopId();
     $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
-    return $oxConfig->getShopConfVar('sandbox', $sShopId, $sModule);
+    return $oxConfig->getShopConfVar('bzSandbox', $sShopId, $sModule);
   }
 
   /**
@@ -55,13 +63,13 @@ class barzahlen_payment extends barzahlen_payment_parent {
    */
   public function getPartner() {
 
-    $partner = '<br/>';
+    $sPartner = '&nbsp;';
 
     for($i = 1; $i <= 10; $i++) {
       $count = str_pad($i,2,"0",STR_PAD_LEFT);
-      $partner .= '<img src="http://cdn.barzahlen.de/images/barzahlen_partner_'.$count.'.png" alt="" />';
+      $sPartner .= '<img src="http://cdn.barzahlen.de/images/barzahlen_partner_'.$count.'.png" alt="" style="vertical-align: middle;" height="25px" />';
     }
 
-    return $partner;
+    return $sPartner;
   }
 }

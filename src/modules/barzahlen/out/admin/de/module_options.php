@@ -25,15 +25,15 @@ $sLangName  = "Deutsch";
 $aLang = array(
 'charset' => 'UTF-8',
 'SHOP_MODULE_GROUP_main' => 'Barzahlen Einstellungen',
-'SHOP_MODULE_sandbox' => 'Testmodus',
-'HELP_SHOP_MODULE_sandbox' => 'Aktivieren Sie den Testmodus um Zahlungen über die Sandbox abzuwickeln.',
-'SHOP_MODULE_shopId' => 'Shop ID',
-'HELP_SHOP_MODULE_shopId' => 'Ihre Barzahlen Shop ID (https://partner.barzahlen.de/)',
-'SHOP_MODULE_paymentKey' => 'Zahlungsschlüssel',
-'HELP_SHOP_MODULE_paymentKey' => 'Ihr Barzahlen Zahlungsschlüssel (https://partner.barzahlen.de/)',
-'SHOP_MODULE_notificationKey' => 'Benachrichtigungsschlüssel',
-'HELP_SHOP_MODULE_notificationKey' => 'Ihr Barzahlen Benachrichtigungsschlüssel (https://partner.barzahlen.de/)',
-'SHOP_MODULE_debug' => 'Erweitertes Logging',
-'HELP_SHOP_MODULE_debug' => 'Aktivieren Sie Debugging für zusätzliches Logging.'
+'SHOP_MODULE_bzSandbox' => 'Testmodus',
+'HELP_SHOP_MODULE_bzSandbox' => 'Aktivieren Sie den Testmodus um Zahlungen &uuml;ber die Sandbox abzuwickeln.',
+'SHOP_MODULE_bzShopId' => 'Shop ID',
+'HELP_SHOP_MODULE_bzShopId' => 'Ihre Barzahlen Shop ID (https://partner.barzahlen.de/)',
+'SHOP_MODULE_bzPaymentKey' => 'Zahlungsschl&uuml;ssel',
+'HELP_SHOP_MODULE_bzPaymentKey' => 'Ihr Barzahlen Zahlungsschl&uuml;ssel (https://partner.barzahlen.de/)',
+'SHOP_MODULE_bzNotificationKey' => 'Benachrichtigungsschl&uuml;ssel',
+'HELP_SHOP_MODULE_bzNotificationKey' => 'Ihr Barzahlen Benachrichtigungsschl&uuml;ssel (https://partner.barzahlen.de/)',
+'SHOP_MODULE_bzDebug' => 'Erweitertes Logging',
+'HELP_SHOP_MODULE_bzDebug' => 'Aktivieren Sie Debugging für zus&auml;tzliches Logging.'
 );
 ?>

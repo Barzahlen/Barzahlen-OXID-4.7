@@ -23,17 +23,36 @@
 
 require_once getShopBasePath() . 'modules/barzahlen/api/loader.php';
 
+/**
+ * Transaction View Controller for Administration Area
+ * Provides a quick overview of the Barzahlen transaction and refund status
+ * for a choosen order.
+ */
 class Barzahlen_Transactions extends oxAdminView {
 
+  /**
+   * Log file
+   */
   const LOGFILE = "barzahlen.log";
+
+  /**
+   * Template for order overview tab
+   *
+   * @var string
+   */
   protected $_sThisTemplate = 'barzahlen_transactions.tpl';
+
+ /**
+   * Module identifier
+   *
+   * @var string
+   */
   protected $_sModuleId = 'barzahlen';
 
   /**
    * Executes parent method parent::render() and prepares everything for the
    * payment table with all Barzahlen information.
    *
-   * @extend render
    * @return string with template file
    */
   public function render() {
@@ -43,16 +62,16 @@ class Barzahlen_Transactions extends oxAdminView {
     $oOrder = $this->getEditObject();
     $this->_aViewData["payment"] = $oOrder->oxorder__oxpaymenttype->value;
     $this->_aViewData["transactionId"] = $oOrder->oxorder__bztransaction->value;
-    $this->_aViewData["state"] = 'BARZAHLEN__STATE_' . strtoupper($oOrder->oxorder__bzstate->value);
+    $this->_aViewData["state"] = 'BZ__STATE_' . strtoupper($oOrder->oxorder__bzstate->value);
     $this->_aViewData["currency"] = $oOrder->oxorder__oxcurrency->value;
 
     if($oOrder->oxorder__bzstate->value == 'paid') {
       if($oOrder->oxorder__bzrefunds->value != "") {
-        $refundData = unserialize(str_replace("&quot;", "\"", $oOrder->oxorder__bzrefunds->value));
-        foreach($refundData as $key => $refund) {
-          $refundData[$key]['state'] = 'BARZAHLEN__STATE_' . strtoupper($refund['state']);
+        $aRefundData = unserialize(str_replace("&quot;", "\"", $oOrder->oxorder__bzrefunds->value));
+        foreach($aRefundData as $iKey => $aRefund) {
+          $aRefundData[$iKey]['state'] = 'BZ__STATE_' . strtoupper($aRefund['state']);
         }
-        $this->_aViewData["refunds"] = $refundData;
+        $this->_aViewData["refunds"] = $aRefundData;
       }
       $this->_aViewData["refundable"] = $this->_getRefundable();
     }
@@ -66,12 +85,15 @@ class Barzahlen_Transactions extends oxAdminView {
    * @return object
    */
   public function getEditObject() {
+
     $soxId = $this->getEditObjectId();
+
     if ($this->_oEditObject === null && isset($soxId) && $soxId != "-1")
     {
       $this->_oEditObject = oxNew("oxorder");
       $this->_oEditObject->load($soxId);
     }
+
     return $this->_oEditObject;
   }
 
@@ -83,15 +105,15 @@ class Barzahlen_Transactions extends oxAdminView {
   protected function _getRefundable() {
 
     $oOrder = $this->getEditObject();
-    $refundData = unserialize(str_replace("&quot;", "\"", $oOrder->oxorder__bzrefunds->value));
+    $aRefundData = unserialize(str_replace("&quot;", "\"", $oOrder->oxorder__bzrefunds->value));
 
-    $refundable = $oOrder->oxorder__oxtotalordersum->value;
-    if($refundData) {
-      foreach($refundData as $refund) {
-        $refundable -= $refund['state'] != 'expired' ? $refund['amount'] : 0;
+    $fRefundable = $oOrder->oxorder__oxtotalordersum->value;
+    if($aRefundData) {
+      foreach($aRefundData as $aRefund) {
+        $fRefundable -= $aRefund['state'] != 'expired' ? $aRefund['amount'] : 0;
       }
     }
-    return round($refundable,2);
+    return round($fRefundable,2);
   }
 
   /**
@@ -100,8 +122,8 @@ class Barzahlen_Transactions extends oxAdminView {
   public function resendPaymentSlip() {
 
     $oOrder = $this->getEditObject();
-    $transactionId = $oOrder->oxorder__bztransaction->value;
-    $this->_resendSlip($transactionId, 'payment');
+    $sTransactionId = $oOrder->oxorder__bztransaction->value;
+    $this->_resendSlip($sTransactionId, 'payment');
   }
 
   /**
@@ -109,8 +131,8 @@ class Barzahlen_Transactions extends oxAdminView {
    */
   public function resendRefundSlip() {
 
-    $refundId = filter_var($_POST['refundId'], FILTER_SANITIZE_NUMBER_INT);
-    $this->_resendSlip($refundId, 'refund');
+    $sRefundId = filter_var($_POST['refundId'], FILTER_SANITIZE_NUMBER_INT);
+    $this->_resendSlip($sRefundId, 'refund');
   }
 
   /**
@@ -119,16 +141,16 @@ class Barzahlen_Transactions extends oxAdminView {
    * @param integer $id (refund) transaction id
    * @param string $type slip type
    */
-  protected function _resendSlip($id, $type) {
+  protected function _resendSlip($id, $sType) {
 
-    $request = new Barzahlen_Request_Resend($id);
-    $resend = $this->_connectBarzahlenApi($request);
+    $oRequest = new Barzahlen_Request_Resend($id);
+    $oResend = $this->_connectBarzahlenApi($oRequest);
 
-    if($resend->isValid()) {
-      $this->_aViewData["info"] = array("class" => "messagebox", "message" => "BARZAHLEN__RESEND_".strtoupper($type)."_SUCCESS");
+    if($oResend->isValid()) {
+      $this->_aViewData["info"] = array("class" => "messagebox", "message" => "BZ__RESEND_".strtoupper($sType)."_SUCCESS");
     }
     else {
-      $this->_aViewData["info"] = array("class" => "errorbox", "message" => "BARZAHLEN__RESEND_".strtoupper($type)."_ERROR");
+      $this->_aViewData["info"] = array("class" => "errorbox", "message" => "BZ__RESEND_".strtoupper($sType)."_ERROR");
     }
   }
 
@@ -138,51 +160,57 @@ class Barzahlen_Transactions extends oxAdminView {
   public function requestRefund() {
 
     $oOrder = $this->getEditObject();
-    $transactionId = $oOrder->oxorder__bztransaction->value;
-    $amount = round(filter_var(str_replace(",", ".", $_POST['refund_amount']), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),2);
+    $sTransactionId = $oOrder->oxorder__bztransaction->value;
+    $fAmount = round(filter_var(str_replace(",", ".", $_POST['refund_amount']), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),2);
 
-    if($amount > $this->_getRefundable()) {
-      $this->_aViewData["info"] = array("class" => "errorbox", "message" => "BARZAHLEN__REFUND_TOO_HIGH");
+    if($fAmount > $this->_getRefundable()) {
+      $this->_aViewData["info"] = array("class" => "errorbox", "message" => "BZ__REFUND_TOO_HIGH");
       return;
     }
 
-    $request = new Barzahlen_Request_Refund($transactionId, $amount, $oOrder->oxorder__oxcurrency->value);
-    $refund = $this->_connectBarzahlenApi($request);
+    $oRequest = new Barzahlen_Request_Refund($sTransactionId, $fAmount, $oOrder->oxorder__oxcurrency->value);
+    $oRefund = $this->_connectBarzahlenApi($oRequest);
 
-    if($refund->isValid()){
-      $refundData = unserialize(str_replace("&quot;", "\"", $oOrder->oxorder__bzrefunds->value));
-      if($refundData === false) $refundData = array();
-      $newRefund = array("refundid" => $refund->getRefundTransactionId(),
-                         "amount" => $amount,
-                         "state" => "pending");
-      $refundData[] = $newRefund;
-      $oOrder->oxorder__bzrefunds = new oxField(serialize($refundData));
+    if($oRefund->isValid()){
+      $aRefundData = unserialize(str_replace("&quot;", "\"", $oOrder->oxorder__bzrefunds->value));
+
+      if($aRefundData === false) {
+        $aRefundData = array();
+      }
+
+      $aNewRefund = array("refundid" => $oRefund->getRefundTransactionId(),
+                          "amount" => $fAmount,
+                          "state" => "pending");
+
+      $aRefundData[] = $aNewRefund;
+
+      $oOrder->oxorder__bzrefunds = new oxField(serialize($aRefundData));
       $oOrder->save();
-      $this->_aViewData["info"] = array("class" => "messagebox", "message" => "BARZAHLEN__REFUND_SUCCESS");
+      $this->_aViewData["info"] = array("class" => "messagebox", "message" => "BZ__REFUND_SUCCESS");
     }
     else {
-      $this->_aViewData["info"] = array("class" => "errorbox", "message" => "BARZAHLEN__REFUND_ERROR");
+      $this->_aViewData["info"] = array("class" => "errorbox", "message" => "BZ__REFUND_ERROR");
     }
   }
 
   /**
-   * Performs the request.
+   * Performs the api request.
    *
-   * @param Barzahlen_Request $request request object
+   * @param Barzahlen_Request $oRequest request object
    * @return updated request object
    */
-  protected function _connectBarzahlenApi($request) {
+  protected function _connectBarzahlenApi($oRequest) {
 
-    $api = $this->_getBarzahlenApi();
+    $oApi = $this->_getBarzahlenApi();
 
     try {
-      $api->handleRequest($request);
+      $oApi->handleRequest($oRequest);
     }
     catch (Exception $e) {
       oxUtils::getInstance()->writeToLog(date('c') . " API/Refund failed: " . $e . "\r\r", self::LOGFILE);
     }
 
-    return $request;
+    return $oRequest;
   }
 
   /**
@@ -196,15 +224,15 @@ class Barzahlen_Transactions extends oxAdminView {
     $sShopId = $oxConfig->getShopId();
     $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
 
-    $shopId = $oxConfig->getShopConfVar('shopId', $sShopId, $sModule);
-    $paymentKey = $oxConfig->getShopConfVar('paymentKey', $sShopId, $sModule);
-    $sandbox = $oxConfig->getShopConfVar('sandbox', $sShopId, $sModule);
-    $debug = $oxConfig->getShopConfVar('debug', $sShopId, $sModule);
+    $sBzShopId = $oxConfig->getShopConfVar('bzShopId', $sShopId, $sModule);
+    $sPaymentKey = $oxConfig->getShopConfVar('bzPaymentKey', $sShopId, $sModule);
+    $blSandbox = $oxConfig->getShopConfVar('bzSandbox', $sShopId, $sModule);
+    $blDebug = $oxConfig->getShopConfVar('bzDebug', $sShopId, $sModule);
 
-    $api = new Barzahlen_Api($shopId, $paymentKey, $sandbox);
-    $api->setDebug($debug, self::LOGFILE);
-    $api->setLanguage($this->_getOrderLanguage());
-    return $api;
+    $oApi = new Barzahlen_Api($sBzShopId, $sPaymentKey, $blSandbox);
+    $oApi->setDebug($blDebug, self::LOGFILE);
+    $oApi->setLanguage($this->_getOrderLanguage());
+    return $oApi;
   }
 
   /**
@@ -216,8 +244,8 @@ class Barzahlen_Transactions extends oxAdminView {
 
     $oOrder = $this->getEditObject();
     $oxConfig = oxConfig::getInstance();
-    $lgConfig = $oxConfig->getShopConfVar('aLanguageParams');
+    $aLgConfig = $oxConfig->getShopConfVar('aLanguageParams');
 
-    return array_search($oOrder->getOrderLanguage(), $lgConfig);
+    return array_search($oOrder->getOrderLanguage(), $aLgConfig);
   }
 }

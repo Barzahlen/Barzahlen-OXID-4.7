@@ -24,10 +24,10 @@
 $sLangName = 'Deutsch';
 $aLang = array(
   'charset' => 'UTF-8',
-  'BARZAHLEN__PAGE_CHECKOUT_PAYMENT_DESC' => '<br/>Mit Abschluss der Bestellung erhalten Sie einen Zahlschein, den Sie sich ausdrucken oder auf Ihr Handy schicken lassen können. Bezahlen Sie den Online-Einkauf mit Hilfe des Zahlscheins in einem Barzahlen-Partnergeschäft in Ihrer Nähe.<br/><br/>',
-  'BARZAHLEN__PAGE_CHECKOUT_PAYMENT_SANDBOX' => 'Der <strong>Sandbox Modus</strong> ist aktiv. Allen getätigten Zahlungen wird ein Test-Zahlschein zugewiesen. Dieser kann nicht von unseren Einzelhandelspartnern verarbeitet werden.<br/><br/>',
-  'BARZAHLEN__PAGE_CHECKOUT_PAYMENT_OUR_PARTNER' => '<strong>Eine Auswahl unserer Partner:</strong>',
-  'BARZAHLEN__PAGE_CHECKOUT_PAYMENT_ERROR' => 'Es gab einen Fehler bei der Datenübertragung. Bitte versuchen Sie es erneut oder wählen Sie eine andere Zahlungsmethode.',
-  'BARZAHLEN__PAGE_CHECKOUT_THANKYOU_TITLE' => 'Einfach und sicher online bezahlen'
+  'BZ__PAGE_CHECKOUT_PAYMENT_DESC' => '<br/>Mit Abschluss der Bestellung bekommen Sie einen Zahlschein angezeigt, den Sie sich ausdrucken oder auf Ihr Handy schicken lassen k&ouml;nnen. Bezahlen Sie den Online-Einkauf mit Hilfe des Zahlscheins an der Kasse einer Barzahlen-Partnerfiliale.<br/><br/>',
+  'BZ__PAGE_CHECKOUT_PAYMENT_SANDBOX' => 'Der <strong>Sandbox Modus</strong> ist aktiv. Allen get&auml;tigten Zahlungen wird ein Test-Zahlschein zugewiesen. Dieser kann nicht von unseren Einzelhandelspartnern verarbeitet werden.<br/><br/>',
+  'BZ__PAGE_CHECKOUT_PAYMENT_OUR_PARTNER' => '<strong>Bezahlen Sie bei:</strong>',
+  'BZ__PAGE_CHECKOUT_PAYMENT_ERROR' => 'Es gab einen Fehler bei der Daten&uuml;bertragung. Bitte versuchen Sie es erneut oder w&auml;hlen Sie eine andere Zahlungsmethode.',
+  'BZ__PAGE_CHECKOUT_THANKYOU_TITLE' => 'Einfach und sicher online bezahlen'
 );
 ?>

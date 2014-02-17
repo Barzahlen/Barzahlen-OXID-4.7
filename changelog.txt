@@ -1,3 +1,6 @@
+==1.1.2 (28.01.2013)==
+* redesigned payment selection and thankyou page
+
 ==1.1.1 (14.11.2012)==
 * restructured files and updated metadata.php
 
