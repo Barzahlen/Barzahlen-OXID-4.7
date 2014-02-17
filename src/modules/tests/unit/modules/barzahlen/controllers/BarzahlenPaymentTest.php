@@ -30,7 +30,7 @@ class Unit_Barzahlen_BarzahlenPaymentTest extends OxidTestCase {
 
     oxTestModules::addFunction('oxUtils', 'redirect', '{throw new Exception("REDIRECT");}');
 
-    $oView = new barzahlen_payment;
+    $oView = new bz_barzahlen_payment;
 
     try {
       $oView->render();
@@ -46,33 +46,19 @@ class Unit_Barzahlen_BarzahlenPaymentTest extends OxidTestCase {
   public function testGetSandbox() {
 
     $oxConfig = oxConfig::getInstance();
-    $sandbox = $oxConfig->getShopConfVar('bzSandbox', $oxConfig->getShopId, oxConfig::OXMODULE_MODULE_PREFIX . 'barzahlen');
+    $sandbox = $oxConfig->getShopConfVar('bzSandbox', $oxConfig->getShopId, oxConfig::OXMODULE_MODULE_PREFIX . 'bz_barzahlen');
 
-    $oView = new barzahlen_payment;
+    $oView = new bz_barzahlen_payment;
 
     $this->assertEquals($sandbox, $oView->getSandbox());
   }
 
   /**
-   * Testing the return html code for displaying the Barzahlen retail partners.
+   * Testing that the standard currency is valid.
    */
-  public function testGetPartner() {
+  public function testCheckCurrency() {
 
-    $oView = new barzahlen_payment;
-
-    $partners = '&nbsp;';
-    $partners .= '<img src="http://cdn.barzahlen.de/images/barzahlen_partner_01.png" alt="" style="vertical-align: middle;" height="25px" />';
-    $partners .= '<img src="http://cdn.barzahlen.de/images/barzahlen_partner_02.png" alt="" style="vertical-align: middle;" height="25px" />';
-    $partners .= '<img src="http://cdn.barzahlen.de/images/barzahlen_partner_03.png" alt="" style="vertical-align: middle;" height="25px" />';
-    $partners .= '<img src="http://cdn.barzahlen.de/images/barzahlen_partner_04.png" alt="" style="vertical-align: middle;" height="25px" />';
-    $partners .= '<img src="http://cdn.barzahlen.de/images/barzahlen_partner_05.png" alt="" style="vertical-align: middle;" height="25px" />';
-    $partners .= '<img src="http://cdn.barzahlen.de/images/barzahlen_partner_06.png" alt="" style="vertical-align: middle;" height="25px" />';
-    $partners .= '<img src="http://cdn.barzahlen.de/images/barzahlen_partner_07.png" alt="" style="vertical-align: middle;" height="25px" />';
-    $partners .= '<img src="http://cdn.barzahlen.de/images/barzahlen_partner_08.png" alt="" style="vertical-align: middle;" height="25px" />';
-    $partners .= '<img src="http://cdn.barzahlen.de/images/barzahlen_partner_09.png" alt="" style="vertical-align: middle;" height="25px" />';
-    $partners .= '<img src="http://cdn.barzahlen.de/images/barzahlen_partner_10.png" alt="" style="vertical-align: middle;" height="25px" />';
-
-    $this->assertEquals($partners, $oView->getPartner());
+    $oView = new bz_barzahlen_payment;
+    $this->assertEquals(true, $oView->checkCurrency());
   }
 }
-?>

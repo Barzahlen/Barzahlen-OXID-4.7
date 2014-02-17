@@ -1,6 +1,6 @@
 <?php
 /**
- * Barzahlen Payment Module SDK
+ * Barzahlen Payment Module SDK (OXID eShop)
  *
  * NOTICE OF LICENSE
  *
@@ -21,14 +21,23 @@
  * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  */
 
-class Unit_Barzahlen_ExceptionTest extends OxidTestCase {
+class Barzahlen_Exception extends Exception {
 
   /**
-   * Testing the correct output.
+   * Constructor to create exception, uses parent function.
    */
-  public function testToString() {
+  public function __construct($message, $code = 0) {
 
-    $exception = new Barzahlen_Exception('An error occurred.', 42);
-    $this->assertEquals("Barzahlen_Exception: [42] - An error occurred.\n", $exception->__toString());
+    parent::__construct($message, $code);
+  }
+
+  /**
+   * Output exception.
+   *
+   * @return string with error code and message
+   */
+  public function __toString() {
+
+    return __CLASS__ . ": [{$this->code}] - {$this->message}\n";
   }
 }

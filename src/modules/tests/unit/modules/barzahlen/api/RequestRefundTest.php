@@ -31,12 +31,12 @@ class Unit_Barzahlen_RequestRefundTest extends OxidTestCase {
 
     $refund = new Barzahlen_Request_Refund('7690927', '24.95');
 
-    $requestArray = array('shop_id' => '10345',
+    $requestArray = array('shop_id' => '10000',
                           'transaction_id' => '7690927',
                           'amount' => '24.95',
                           'currency' => 'EUR',
                           'language' => 'de',
-                          'hash' => 'eede7891572ec2b37bd56dafd271a5095c84808db85d4107c710bce4ead5d57a52667d2d42794ef89042b1aa4f1ad20a79b05bdd6b5a59c6c4cf072eaac73f19');
+                          'hash' => '458f66fc498ab846d408020dbe8b695ca94ca6b4bddf7c95e247a9284af196d98ff3b97951200eff4c051b4d37f6927033fadae0e320eae9beacbe0fcbc0b36f');
 
     $this->assertEquals($requestArray, $refund->buildRequestArray(SHOPID, PAYMENTKEY, 'de'));
   }
@@ -49,12 +49,12 @@ class Unit_Barzahlen_RequestRefundTest extends OxidTestCase {
 
     $refund = new Barzahlen_Request_Refund('7690927', '24.95', 'USD');
 
-    $requestArray = array('shop_id' => '10345',
+    $requestArray = array('shop_id' => '10000',
                           'transaction_id' => '7690927',
                           'amount' => '24.95',
                           'currency' => 'USD',
                           'language' => 'de',
-                          'hash' => '700e8e7ed54d8b36cc5f441fccc44ea702c3155bddefb42dd264f7cd7f0c73bfd0fa234a3727de9f490a797002e05dba083dadc2734eec30b10b2f141e830699');
+                          'hash' => 'df51482cc0d25a9d70bfd321d622cc6e1965b1cf8a4302628d51d23b8f7ec1d20798a6d98c5c6f8e758d052fd336891b9b4230a1a4b381d278affdbe8a09c349');
 
     $this->assertEquals($requestArray, $refund->buildRequestArray(SHOPID, PAYMENTKEY, 'de'));
   }
@@ -69,7 +69,7 @@ class Unit_Barzahlen_RequestRefundTest extends OxidTestCase {
                       <origin-transaction-id>7690927</origin-transaction-id>
                       <refund-transaction-id>7691945</refund-transaction-id>
                       <result>0</result>
-                      <hash>52a73a20af5bd43b1aa2bc8d31d90b7349c22e077d8dfb52249871086628ba1385e645443be92a347aad046520b139ac450f5a680d5c611ab101ecaf70a66aaa</hash>
+                      <hash>3516dd06b410ab05d41c50136686bb53c71a701e0c57fdb156839ab0c8b60cfa07f75f49a8b682ea768b5474b4c3891cfd93fed9811af05dba8306b32077b133</hash>
                     </response>';
 
     $refund = new Barzahlen_Request_Refund('7690927', '24.95');
@@ -186,4 +186,3 @@ class Unit_Barzahlen_RequestRefundTest extends OxidTestCase {
     $this->assertEquals('refund', $refund->getRequestType());
   }
 }
-?>

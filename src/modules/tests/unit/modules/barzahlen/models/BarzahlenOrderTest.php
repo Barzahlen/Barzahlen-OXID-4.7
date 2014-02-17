@@ -33,7 +33,7 @@ class Unit_Barzahlen_BarzahlenOrderTest extends OxidTestCase {
     $oBasket = new oxBasket;
     $oUser = new oxUser;
 
-    $oView = $this->getMock("barzahlen_order", array("_connectBarzahlenApi"));
+    $oView = $this->getMock("bz_barzahlen_order", array("_connectBarzahlenApi"));
     $oView->expects($this->once())
           ->method('_connectBarzahlenApi');
     $oView->oxorder__oxpaymenttype = new oxField('oxidbarzahlen');
@@ -46,7 +46,7 @@ class Unit_Barzahlen_BarzahlenOrderTest extends OxidTestCase {
    */
   public function testGetBarzahlenApi() {
 
-    $oView = $this->getProxyClass('barzahlen_order');
+    $oView = $this->getProxyClass('bz_barzahlen_order');
     $oApi = $oView->_getBarzahlenApi();
 
     $this->assertAttributeEquals(SHOPID, '_shopId', $oApi);
@@ -56,4 +56,3 @@ class Unit_Barzahlen_BarzahlenOrderTest extends OxidTestCase {
     $this->assertAttributeEquals(0, '_madeAttempts', $oApi);
   }
 }
-?>

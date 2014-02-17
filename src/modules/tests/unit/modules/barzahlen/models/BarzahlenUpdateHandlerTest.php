@@ -38,7 +38,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
    */
   public function setUp() {
 
-    $this->oUpdateHandler = new barzahlen_update_handler;
+    $this->oUpdateHandler = new bz_barzahlen_update_handler;
     $this->restore = false;
   }
 
@@ -49,7 +49,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
 
     $_GET = array('state' => 'paid',
                   'transaction_id' => '27767255',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '25.9',
                   'currency' => 'EUR',
@@ -57,7 +57,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => 'f3479069b1da59796662584cd255cbe0742192bc1c8496671fde59d31c06f4057887944548d344629516720d4e4caf61d5477129c85ede17e4b29ca280c0c325');
+                  'hash' => '511d030aef4f0caed3b81d0dbb50096b0e1a39c14fb2e161b390e9c2939ee96a5acd2884cd3268d70fa720e9cb32968cda5fd5cea906e73140c04480ea93cfba');
 
     $this->assertTrue($this->oUpdateHandler->checkData($_GET));
   }
@@ -69,7 +69,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
 
     $_GET = array('state' => 'paid',
                   'transaction_id' => '27767255',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '25.9',
                   'currency' => 'EUR',
@@ -89,7 +89,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
 
     $_GET = array('state' => 'paid',
                   'transaction_id' => '27767255',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '25.9',
                   'currency' => 'EUR',
@@ -97,7 +97,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => 'f3479069b1da59796662584cd255cbe0742192bc1c8496671fde59d31c06f4057887944548d344629516720d4e4caf61d5477129c85ede17e4b29ca280c0c325');
+                  'hash' => '511d030aef4f0caed3b81d0dbb50096b0e1a39c14fb2e161b390e9c2939ee96a5acd2884cd3268d70fa720e9cb32968cda5fd5cea906e73140c04480ea93cfba');
 
     $this->assertTrue($this->oUpdateHandler->checkData($_GET));
     $this->assertEquals('paid', $this->oUpdateHandler->getState());
@@ -110,7 +110,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
 
     $_GET = array('state' => 'paid',
                   'transaction_id' => '27767255',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '25.9',
                   'currency' => 'EUR',
@@ -118,7 +118,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => 'f3479069b1da59796662584cd255cbe0742192bc1c8496671fde59d31c06f4057887944548d344629516720d4e4caf61d5477129c85ede17e4b29ca280c0c325');
+                  'hash' => '511d030aef4f0caed3b81d0dbb50096b0e1a39c14fb2e161b390e9c2939ee96a5acd2884cd3268d70fa720e9cb32968cda5fd5cea906e73140c04480ea93cfba');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertTrue($this->oUpdateHandler->updatePayment());
@@ -136,7 +136,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
 
     $_GET = array('state' => 'expired',
                   'transaction_id' => '27767255',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '25.9',
                   'currency' => 'EUR',
@@ -144,7 +144,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => '5e729b53abc2028f60688b6f512023f076c0ca0d631c51ec53e9dcdd95d7fdb7d4fe9a2963667f2b74729ecdcc840ed7673f1995ba6c82945a621109146b00d0');
+                  'hash' => 'cc5987ebaa343ba52857348a991742bd5cd21b603fd73be54b7ccc87826adca0123c89a07a5f4334c2e1a0dc0d23cb4e85f9a60a772d551e5002dd9e2b2f79e0');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertTrue($this->oUpdateHandler->updatePayment());
@@ -162,7 +162,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
 
     $_GET = array('state' => 'paid',
                   'transaction_id' => '27767255',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '25.9',
                   'currency' => 'EUR',
@@ -170,7 +170,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => '00859ac77303fea14f2e985640dc35d50656d17cfc2be146328fd9716d83dfef49b0b5ce4113d19d3c6dfc35559849cab3d5fa9ee8eb520a02767be9c450a1d9');
+                  'hash' => 'd19ddb51fce56d76ac6aa3102b0a4344323ef5a1e91835f94efdfa389102a7506479c36ee7cafa7b8266cc0bc3dd3a8f5e63923e3ccd623d50d8d0ed8c994eff');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertFalse($this->oUpdateHandler->updatePayment());
@@ -187,7 +187,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
 
     $_GET = array('state' => 'paid',
                   'transaction_id' => '27767255',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '19.99',
                   'currency' => 'EUR',
@@ -195,7 +195,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => '5e23cfabc47ba174e2556ead1f60c91dd23c4618547309e6ab23f9a5c00cf753e3346c47becfd7117eb868568a86466d3f0b76e44367f662f14a4575d7cf229a');
+                  'hash' => 'b9f3c75a76acaa12d4d49d488bfe6ab0028ef324139470cfa6884d705a3af474f4f828ac2322175d66f430b1109c96f451ea559921ef6a3d99d235f8c6a4e131');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertFalse($this->oUpdateHandler->updatePayment());
@@ -212,7 +212,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
 
     $_GET = array('state' => 'paid',
                   'transaction_id' => '27767255',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '25.9',
                   'currency' => 'USD',
@@ -220,7 +220,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => '4cd860853130ade46c1e96885fcc3e47b33fc62effbc8cdb9e63df1add605c0519c5b7666ac753e409f5563a8e382468e9111f37b44c1350968116ed60ae1740');
+                  'hash' => '3688c754ea79e47e70d288fb8748d80bf23debd01e7617014cce9933dc225ac5a193f01a286a51b7992835d283ce9cfd62102219c63ed71c3c6f09d008ff331c');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertFalse($this->oUpdateHandler->updatePayment());
@@ -237,7 +237,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
 
     $_GET = array('state' => 'paid',
                   'transaction_id' => '27767342',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '25.9',
                   'currency' => 'EUR',
@@ -245,7 +245,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => '60aea3d6e9d7c0715c2ba12b8a05bbc950ff9b7e1b797871efa0b81a601ced16095757606675214ee96892ce2e94b7e3f93c2566957e057df3d03bbb38d11db4');
+                  'hash' => 'ddfcb25bc5843b105195afb0167c66ff6e8359e9e21f7925247483a54fb3f790a80e4060546892781119237a665a65ac8acc02f5460160ea12fa3882a90d7f60');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertFalse($this->oUpdateHandler->updatePayment());
@@ -264,7 +264,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
     $_GET = array('state' => 'refund_completed',
                   'refund_transaction_id' => '27828393',
                   'origin_transaction_id' => '27767585',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '22',
                   'currency' => 'EUR',
@@ -272,7 +272,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => '21bb8a26e37b7acb71c139ed7aa81186d520de59999303e4ed7f04540c042933bc1d465743b9db5d9c92ec469a1041abeb2478febc149c0a87ccc77cfda819a0');
+                  'hash' => '50c1c00ce8a089629e8bd72d0fbaba16472f8fe15a847c9e0ac592f93db28d0a897affbfac45e7241c83783325922d92dcea3c6d7ba0442a1b2a8b405ad3b969');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertTrue($this->oUpdateHandler->updateRefund());
@@ -297,7 +297,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
     $_GET = array('state' => 'refund_expired',
                   'refund_transaction_id' => '27828393',
                   'origin_transaction_id' => '27767585',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '22',
                   'currency' => 'EUR',
@@ -305,7 +305,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => '16e32df7d6b6a469e5cd83b9bd226859b869f8eba2412c7e3fd3a83fe213ff609add792d1ce19ff7cb5dbe59e4890da2f9b0fb4c57c82073632895bf4dc46563');
+                  'hash' => 'ea6faaacdf4d787bc2f88953f1321c3eec9f860a1e7360eb4318d8649824d8689fafcf84465ada314f15011c4fe2e13872cb7c26372cf11ebe50372dbed8ba60');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertTrue($this->oUpdateHandler->updateRefund());
@@ -330,7 +330,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
     $_GET = array('state' => 'refund_completed',
                   'refund_transaction_id' => '27828393',
                   'origin_transaction_id' => '27767585',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '22',
                   'currency' => 'EUR',
@@ -338,7 +338,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => '30efb9b2e1d4f2a8b95165281d661c81e446d77af9c2b05413df70ace93ecb8402c85a0a21ada40e2b1a923d2df46d49055e498fa176ae6f79eb7bd53e636615');
+                  'hash' => '5a5b8b2ef80f8908d7ca8c089c12e150d8ee47c05fbe9198064303e08e9c260110ddf2f6d25ec727ed4b4b27def15d72945673d293ec0f6d3a5e128bf4e2bfbe');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertFalse($this->oUpdateHandler->updateRefund());
@@ -362,7 +362,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
     $_GET = array('state' => 'refund_completed',
                   'refund_transaction_id' => '27828391',
                   'origin_transaction_id' => '27767585',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '22',
                   'currency' => 'EUR',
@@ -370,7 +370,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => '06d69502750669f2974b756242a2eccb83a751df136855ada1877ffaa47d5f3b7d1173bc4461a3cd713bbb720911a9835093a22543360d8106431e87358db798');
+                  'hash' => 'a1171147f27d93252626dc74733ad46fe79e52f7d3d4a656b0738b989c0cc21a80bd25b2ad7ca92bd6d51adcd16f3fe2c7fd3d6b3d0f1c48fca3faf117e5f3b8');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertFalse($this->oUpdateHandler->updateRefund());
@@ -394,7 +394,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
     $_GET = array('state' => 'refund_completed',
                   'refund_transaction_id' => '27828393',
                   'origin_transaction_id' => '27767585',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '50',
                   'currency' => 'EUR',
@@ -402,7 +402,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => 'c55bae1acd023a789aeac6e089a9d53e10af8134aadfccae3389680884d960dcc85ae4a512998fff274626b8ecd986cda068d2823965bd162a45518cc89fc4b2');
+                  'hash' => 'dbfd4cf01b929f26cdef7cc29b929bbe850b107b1a44acb07279b894b965c4c72ac21a6dc6b290c4e0e05ec9882d64bd7f382233dcdfe845f5026040ff666985');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertFalse($this->oUpdateHandler->updateRefund());
@@ -426,7 +426,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
     $_GET = array('state' => 'refund_completed',
                   'refund_transaction_id' => '27828393',
                   'origin_transaction_id' => '27767585',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '22',
                   'currency' => 'USD',
@@ -434,7 +434,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => 'c7167299e3e5b2bed681449f0453361184d60f52de70502a5764098ea192bbafbc520cb902ad34b2e1618e34844e5ab6e1195beffb4d19543c9a5283932922d9');
+                  'hash' => '2df694df69077e581384eb19f7d4a18d8937cec2681056315ca5195d20f35e394d82febf59de859a81373305da1f2149442309ce320a9e697b737ba85ea87382');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertFalse($this->oUpdateHandler->updateRefund());
@@ -458,7 +458,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
     $_GET = array('state' => 'refund_completed',
                   'refund_transaction_id' => '27828461',
                   'origin_transaction_id' => '27767585',
-                  'shop_id' => '10345',
+                  'shop_id' => '10000',
                   'customer_email' => 'mustermann@barzahlen.de',
                   'amount' => '3.9',
                   'currency' => 'EUR',
@@ -466,7 +466,7 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
                   'customer_var_0' => '',
                   'customer_var_1' => '',
                   'customer_var_2' => '',
-                  'hash' => 'da98d27899c4c355afcd27a1adebfec0abe0b05f1ba9cffdc443980591ed6645e917e4ef33ae9cdd77f8defb150e59c7eb3bfb9b1dd93b9325a4fb7da45a8abc');
+                  'hash' => 'f261e1f2ec063b31c023dfa10b1471ce87bc4e90c2b3a5a554fdf410c444bce58b9030e86d1eb1298445cb2a8d9de3cceb119a04936418c5a29d86b979ce3337');
 
     $this->oUpdateHandler->checkData($_GET);
     $this->assertFalse($this->oUpdateHandler->updateRefund());
@@ -493,4 +493,3 @@ class Unit_Barzahlen_BarzahlenUpdateHandlerTest extends OxidTestCase {
     }
   }
 }
-?>

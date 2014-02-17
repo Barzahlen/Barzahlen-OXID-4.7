@@ -30,14 +30,16 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
 
     modConfig::setParameter("oxid", "2a289076590d790c6d50aabd6f5974eb");
 
-    $oView = $this->getProxyClass('barzahlen_transactions');
-    $this->assertEquals('barzahlen_transactions.tpl', $oView->render());
+    $oView = $this->getProxyClass('bz_barzahlen_transactions');
+    $this->assertEquals('bz_barzahlen_transactions.tpl', $oView->render());
+    $this->assertEquals(null, $oView->getInfoMessage());
+    $this->assertEquals(null, $oView->getInfoClass());
 
-    $aViewData = $oView->getNonPublicVar('_aViewData');
-    $this->assertEquals('oxidbarzahlen', $aViewData['payment']);
-    $this->assertEquals('27767255', $aViewData['transactionId']);
-    $this->assertEquals('BZ__STATE_PENDING', $aViewData['state']);
-    $this->assertEquals('EUR', $aViewData['currency']);
+    $this->assertEquals('oxidbarzahlen', $oView->getPaymentMethod());
+    $this->assertEquals('27767255', $oView->getTransactionId());
+    $this->assertEquals('BZ__STATE_PENDING', $oView->getTransactionState());
+    $this->assertEquals('EUR', $oView->getTransactionCurrency());
+    $this->assertEquals(null, $oView->getTransactionRefundable());
   }
 
   /**
@@ -47,15 +49,16 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
 
     modConfig::setParameter("oxid", "c07fabf21fc080a3d2f81d951a405c37");
 
-    $oView = $this->getProxyClass('barzahlen_transactions');
-    $this->assertEquals('barzahlen_transactions.tpl', $oView->render());
+    $oView = $this->getProxyClass('bz_barzahlen_transactions');
+    $this->assertEquals('bz_barzahlen_transactions.tpl', $oView->render());
+    $this->assertEquals(null, $oView->getInfoMessage());
+    $this->assertEquals(null, $oView->getInfoClass());
 
-    $aViewData = $oView->getNonPublicVar('_aViewData');
-    $this->assertEquals('oxidbarzahlen', $aViewData['payment']);
-    $this->assertEquals('27767342', $aViewData['transactionId']);
-    $this->assertEquals('BZ__STATE_PAID', $aViewData['state']);
-    $this->assertEquals('EUR', $aViewData['currency']);
-    $this->assertEquals(25.9, $aViewData['refundable']);
+    $this->assertEquals('oxidbarzahlen', $oView->getPaymentMethod());
+    $this->assertEquals('27767342', $oView->getTransactionId());
+    $this->assertEquals('BZ__STATE_PAID', $oView->getTransactionState());
+    $this->assertEquals('EUR', $oView->getTransactionCurrency());
+    $this->assertEquals(25.9, $oView->getTransactionRefundable());
   }
 
   /**
@@ -65,14 +68,16 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
 
     modConfig::setParameter("oxid", "0dae2566880a9e512886c0a7cd63dd9a");
 
-    $oView = $this->getProxyClass('barzahlen_transactions');
-    $this->assertEquals('barzahlen_transactions.tpl', $oView->render());
+    $oView = $this->getProxyClass('bz_barzahlen_transactions');
+    $this->assertEquals('bz_barzahlen_transactions.tpl', $oView->render());
+    $this->assertEquals(null, $oView->getInfoMessage());
+    $this->assertEquals(null, $oView->getInfoClass());
 
-    $aViewData = $oView->getNonPublicVar('_aViewData');
-    $this->assertEquals('oxidbarzahlen', $aViewData['payment']);
-    $this->assertEquals('27767428', $aViewData['transactionId']);
-    $this->assertEquals('BZ__STATE_EXPIRED', $aViewData['state']);
-    $this->assertEquals('EUR', $aViewData['currency']);
+    $this->assertEquals('oxidbarzahlen', $oView->getPaymentMethod());
+    $this->assertEquals('27767428', $oView->getTransactionId());
+    $this->assertEquals('BZ__STATE_EXPIRED', $oView->getTransactionState());
+    $this->assertEquals('EUR', $oView->getTransactionCurrency());
+    $this->assertEquals(null, $oView->getTransactionRefundable());
   }
 
   /**
@@ -83,17 +88,18 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
 
     modConfig::setParameter("oxid", "de4576783559ce1477e46db9af4f44bb");
 
-    $oView = $this->getProxyClass('barzahlen_transactions');
-    $this->assertEquals('barzahlen_transactions.tpl', $oView->render());
+    $oView = $this->getProxyClass('bz_barzahlen_transactions');
+    $this->assertEquals('bz_barzahlen_transactions.tpl', $oView->render());
+    $this->assertEquals(null, $oView->getInfoMessage());
+    $this->assertEquals(null, $oView->getInfoClass());
 
-    $aViewData = $oView->getNonPublicVar('_aViewData');
-    $this->assertEquals('oxidbarzahlen', $aViewData['payment']);
-    $this->assertEquals('27767507', $aViewData['transactionId']);
-    $this->assertEquals('BZ__STATE_PAID', $aViewData['state']);
-    $this->assertEquals('EUR', $aViewData['currency']);
-    $this->assertEquals(22, $aViewData['refundable']);
+    $this->assertEquals('oxidbarzahlen', $oView->getPaymentMethod());
+    $this->assertEquals('27767507', $oView->getTransactionId());
+    $this->assertEquals('BZ__STATE_PAID', $oView->getTransactionState());
+    $this->assertEquals('EUR', $oView->getTransactionCurrency());
+    $this->assertEquals(22, $oView->getTransactionRefundable());
 
-    $aRefundData = $aViewData['refunds'];
+    $aRefundData = $oView->getTransactionRefunds();
     $this->assertEquals(27828537, $aRefundData[0]['refundid']);
     $this->assertEquals(3.9, $aRefundData[0]['amount']);
     $this->assertEquals('BZ__STATE_PENDING', $aRefundData[0]['state']);
@@ -107,17 +113,18 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
 
     modConfig::setParameter("oxid", "6988a7466abe756b93c1f0b2b11af7d3");
 
-    $oView = $this->getProxyClass('barzahlen_transactions');
-    $this->assertEquals('barzahlen_transactions.tpl', $oView->render());
+    $oView = $this->getProxyClass('bz_barzahlen_transactions');
+    $this->assertEquals('bz_barzahlen_transactions.tpl', $oView->render());
+    $this->assertEquals(null, $oView->getInfoMessage());
+    $this->assertEquals(null, $oView->getInfoClass());
 
-    $aViewData = $oView->getNonPublicVar('_aViewData');
-    $this->assertEquals('oxidbarzahlen', $aViewData['payment']);
-    $this->assertEquals('27767585', $aViewData['transactionId']);
-    $this->assertEquals('BZ__STATE_PAID', $aViewData['state']);
-    $this->assertEquals('EUR', $aViewData['currency']);
-    $this->assertEquals(0, $aViewData['refundable']);
+    $this->assertEquals('oxidbarzahlen', $oView->getPaymentMethod());
+    $this->assertEquals('27767585', $oView->getTransactionId());
+    $this->assertEquals('BZ__STATE_PAID', $oView->getTransactionState());
+    $this->assertEquals('EUR', $oView->getTransactionCurrency());
+    $this->assertEquals(0, $oView->getTransactionRefundable());
 
-    $aRefundData = $aViewData['refunds'];
+    $aRefundData = $oView->getTransactionRefunds();
     $this->assertEquals(27828393, $aRefundData[0]['refundid']);
     $this->assertEquals(22, $aRefundData[0]['amount']);
     $this->assertEquals('BZ__STATE_PENDING', $aRefundData[0]['state']);
@@ -134,17 +141,18 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
 
     modConfig::setParameter("oxid", "a6f9bc61ce7aec5dabb7600636f5ce1d");
 
-    $oView = $this->getProxyClass('barzahlen_transactions');
-    $this->assertEquals('barzahlen_transactions.tpl', $oView->render());
+    $oView = $this->getProxyClass('bz_barzahlen_transactions');
+    $this->assertEquals('bz_barzahlen_transactions.tpl', $oView->render());
+    $this->assertEquals(null, $oView->getInfoMessage());
+    $this->assertEquals(null, $oView->getInfoClass());
 
-    $aViewData = $oView->getNonPublicVar('_aViewData');
-    $this->assertEquals('oxidbarzahlen', $aViewData['payment']);
-    $this->assertEquals('27767667', $aViewData['transactionId']);
-    $this->assertEquals('BZ__STATE_PAID', $aViewData['state']);
-    $this->assertEquals('EUR', $aViewData['currency']);
-    $this->assertEquals(0, $aViewData['refundable']);
+    $this->assertEquals('oxidbarzahlen', $oView->getPaymentMethod());
+    $this->assertEquals('27767667', $oView->getTransactionId());
+    $this->assertEquals('BZ__STATE_PAID', $oView->getTransactionState());
+    $this->assertEquals('EUR', $oView->getTransactionCurrency());
+    $this->assertEquals(0, $oView->getTransactionRefundable());
 
-    $aRefundData = $aViewData['refunds'];
+    $aRefundData = $oView->getTransactionRefunds();
     $this->assertEquals(27828255, $aRefundData[0]['refundid']);
     $this->assertEquals(22, $aRefundData[0]['amount']);
     $this->assertEquals('BZ__STATE_COMPLETED', $aRefundData[0]['state']);
@@ -160,11 +168,13 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
 
     modConfig::setParameter("oxid", "2a289076590d790c6d50aabd6f5974eb");
 
-    $oView = new barzahlen_transactions;
+    $oView = new bz_barzahlen_transactions;
     $oObject = $oView->getEditObject();
 
     $this->assertEquals('27767255', $oObject->oxorder__bztransaction->rawValue);
     $this->assertEquals('pending', $oObject->oxorder__bzstate->rawValue);
+    $this->assertEquals(null, $oView->getInfoMessage());
+    $this->assertEquals(null, $oView->getInfoClass());
   }
 
   /**
@@ -172,11 +182,13 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
    */
   public function testGetEditObjectNoParameter() {
 
-    $oView = new barzahlen_transactions;
+    $oView = new bz_barzahlen_transactions;
     $oObject = $oView->getEditObject();
 
     $this->assertEquals(null, $oObject->oxorder__bztransaction->rawValue);
     $this->assertEquals(null, $oObject->oxorder__bzstate->rawValue);
+    $this->assertEquals(null, $oView->getInfoMessage());
+    $this->assertEquals(null, $oView->getInfoClass());
   }
 
   /**
@@ -186,8 +198,10 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
 
     modConfig::setParameter("oxid", "de4576783559ce1477e46db9af4f44bb");
 
-    $oView = $this->getProxyClass('barzahlen_transactions');
+    $oView = $this->getProxyClass('bz_barzahlen_transactions');
     $this->assertEquals(22, $oView->_getRefundable());
+    $this->assertEquals(null, $oView->getInfoMessage());
+    $this->assertEquals(null, $oView->getInfoClass());
   }
 
   /**
@@ -197,8 +211,10 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
 
     modConfig::setParameter("oxid", "a6f9bc61ce7aec5dabb7600636f5ce1d");
 
-    $oView = $this->getProxyClass('barzahlen_transactions');
+    $oView = $this->getProxyClass('bz_barzahlen_transactions');
     $this->assertEquals(0, $oView->_getRefundable());
+    $this->assertEquals(null, $oView->getInfoMessage());
+    $this->assertEquals(null, $oView->getInfoClass());
   }
 
   /**
@@ -208,12 +224,14 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
 
     modConfig::setParameter("oxid", "2a289076590d790c6d50aabd6f5974eb");
 
-    $oView = $this->getMock('barzahlen_transactions', array('_connectBarzahlenApi'));
+    $oView = $this->getMock('bz_barzahlen_transactions', array('_connectBarzahlenApi'));
     $oView->expects($this->once())
            ->method('_connectBarzahlenApi')
            ->will($this->returnValue(new successRq));
 
     $oView->resendPaymentSlip();
+    $this->assertEquals('BZ__RESEND_PAYMENT_SUCCESS', $oView->getInfoMessage());
+    $this->assertEquals('messagebox', $oView->getInfoClass());
   }
 
   /**
@@ -223,12 +241,14 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
 
     modConfig::setParameter("oxid", "c07fabf21fc080a3d2f81d951a405c37");
 
-    $oView = $this->getMock('barzahlen_transactions', array('_connectBarzahlenApi'));
+    $oView = $this->getMock('bz_barzahlen_transactions', array('_connectBarzahlenApi'));
     $oView->expects($this->once())
            ->method('_connectBarzahlenApi')
            ->will($this->returnValue(new failureRq));
 
     $oView->resendPaymentSlip();
+    $this->assertEquals('BZ__RESEND_PAYMENT_ERROR', $oView->getInfoMessage());
+    $this->assertEquals('errorbox', $oView->getInfoClass());
   }
 
   /**
@@ -239,12 +259,14 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
     modConfig::setParameter("oxid", "6988a7466abe756b93c1f0b2b11af7d3");
     $_POST['refundId'] = '27828393';
 
-    $oView = $this->getMock('barzahlen_transactions', array('_connectBarzahlenApi'));
+    $oView = $this->getMock('bz_barzahlen_transactions', array('_connectBarzahlenApi'));
     $oView->expects($this->once())
            ->method('_connectBarzahlenApi')
            ->will($this->returnValue(new successRq));
 
     $oView->resendRefundSlip();
+    $this->assertEquals('BZ__RESEND_REFUND_SUCCESS', $oView->getInfoMessage());
+    $this->assertEquals('messagebox', $oView->getInfoClass());
   }
 
   /**
@@ -255,12 +277,14 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
     modConfig::setParameter("oxid", "6988a7466abe756b93c1f0b2b11af7d3");
     $_POST['refundId'] = '27828321';
 
-    $oView = $this->getMock('barzahlen_transactions', array('_connectBarzahlenApi'));
+    $oView = $this->getMock('bz_barzahlen_transactions', array('_connectBarzahlenApi'));
     $oView->expects($this->once())
            ->method('_connectBarzahlenApi')
            ->will($this->returnValue(new failureRq));
 
     $oView->resendRefundSlip();
+    $this->assertEquals('BZ__RESEND_REFUND_ERROR', $oView->getInfoMessage());
+    $this->assertEquals('errorbox', $oView->getInfoClass());
   }
 
   /**
@@ -271,12 +295,14 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
     modConfig::setParameter("oxid", "c07fabf21fc080a3d2f81d951a405c37");
     $_POST['refund_amount'] = '10';
 
-    $oView = $this->getMock('barzahlen_transactions', array('_connectBarzahlenApi'));
+    $oView = $this->getMock('bz_barzahlen_transactions', array('_connectBarzahlenApi'));
     $oView->expects($this->once())
            ->method('_connectBarzahlenApi')
            ->will($this->returnValue(new successRq));
 
     $oView->requestRefund();
+    $this->assertEquals('BZ__REFUND_SUCCESS', $oView->getInfoMessage());
+    $this->assertEquals('messagebox', $oView->getInfoClass());
   }
 
   /**
@@ -287,13 +313,14 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
     modConfig::setParameter("oxid", "c07fabf21fc080a3d2f81d951a405c37");
     $_POST['refund_amount'] = '10';
 
-    $oView = $this->getMock('barzahlen_transactions', array('_connectBarzahlenApi'));
+    $oView = $this->getMock('bz_barzahlen_transactions', array('_connectBarzahlenApi'));
     $oView->expects($this->once())
            ->method('_connectBarzahlenApi')
            ->will($this->returnValue(new failureRq));
 
     $oView->requestRefund();
-
+    $this->assertEquals('BZ__REFUND_ERROR', $oView->getInfoMessage());
+    $this->assertEquals('errorbox', $oView->getInfoClass());
   }
 
   /**
@@ -304,12 +331,13 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
     modConfig::setParameter("oxid", "c07fabf21fc080a3d2f81d951a405c37");
     $_POST['refund_amount'] = '999.99';
 
-    $oView = $this->getMock('barzahlen_transactions', array('_connectBarzahlenApi'));
+    $oView = $this->getMock('bz_barzahlen_transactions', array('_connectBarzahlenApi'));
     $oView->expects($this->never())
            ->method('_connectBarzahlenApi');
 
     $oView->requestRefund();
-
+    $this->assertEquals('BZ__REFUND_TOO_HIGH', $oView->getInfoMessage());
+    $this->assertEquals('errorbox', $oView->getInfoClass());
   }
 
   /**
@@ -319,7 +347,7 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
 
     modConfig::setParameter("oxid", "a6f9bc61ce7aec5dabb7600636f5ce1d");
 
-    $oView = $this->getProxyClass('barzahlen_transactions');
+    $oView = $this->getProxyClass('bz_barzahlen_transactions');
     $oApi = $oView->_getBarzahlenApi();
 
     $this->assertAttributeEquals(SHOPID, '_shopId', $oApi);
@@ -337,4 +365,3 @@ class Unit_Barzahlen_BarzahlenTransactionsTest extends OxidTestCase {
     unset($_SESSION['headerCode']);
   }
 }
-?>

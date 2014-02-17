@@ -32,7 +32,7 @@ class Unit_Barzahlen_BarzahlenPaymentGatewayTest extends OxidTestCase {
       $oOrder = new oxOrder();
       $oOrder->oxorder__oxpaymenttype = new oxField('oxidbarzahlen');
 
-      $oView = $this->getMock("barzahlen_payment_gateway", array("_connectBarzahlenApi"));
+      $oView = $this->getMock("bz_barzahlen_payment_gateway", array("_connectBarzahlenApi"));
       $oView->expects($this->once())
             ->method('_connectBarzahlenApi')
             ->will($this->returnValue(new successRq));
@@ -49,7 +49,7 @@ class Unit_Barzahlen_BarzahlenPaymentGatewayTest extends OxidTestCase {
       $oOrder = new oxOrder();
       $oOrder->oxorder__oxpaymenttype = new oxField('oxidbarzahlen');
 
-      $oView = $this->getMock("barzahlen_payment_gateway", array("_connectBarzahlenApi"));
+      $oView = $this->getMock("bz_barzahlen_payment_gateway", array("_connectBarzahlenApi"));
       $oView->expects($this->once())
             ->method('_connectBarzahlenApi')
             ->will($this->returnValue(new failureRq));
@@ -67,7 +67,7 @@ class Unit_Barzahlen_BarzahlenPaymentGatewayTest extends OxidTestCase {
       $oOrder = new oxOrder();
       $oOrder->oxorder__oxpaymenttype = new oxField('oxideasypaying');
 
-      $oView = $this->getMock("barzahlen_payment_gateway", array("_connectBarzahlenApi"));
+      $oView = $this->getMock("bz_barzahlen_payment_gateway", array("_connectBarzahlenApi"));
       $oView->expects($this->never())
             ->method('_connectBarzahlenApi');
 
@@ -81,7 +81,7 @@ class Unit_Barzahlen_BarzahlenPaymentGatewayTest extends OxidTestCase {
 
     modConfig::setParameter("oxid", "a6f9bc61ce7aec5dabb7600636f5ce1d");
 
-    $oView = $this->getProxyClass('barzahlen_payment_gateway');
+    $oView = $this->getProxyClass('bz_barzahlen_payment_gateway');
     $oApi = $oView->_getBarzahlenApi(0);
 
     $this->assertAttributeEquals(SHOPID, '_shopId', $oApi);
@@ -91,4 +91,3 @@ class Unit_Barzahlen_BarzahlenPaymentGatewayTest extends OxidTestCase {
     $this->assertAttributeEquals(0, '_madeAttempts', $oApi);
   }
 }
-?>

@@ -38,7 +38,7 @@ class Unit_Barzahlen_BarzahlenCallbackTest extends OxidTestCase {
    */
   public function testRenderValidPaid() {
 
-    $handler = $this->getMock('barzahlen_update_handler', array('checkData', 'getState', 'updatePayment', 'updateRefund'));
+    $handler = $this->getMock('bz_barzahlen_update_handler', array('checkData', 'getState', 'updatePayment', 'updateRefund'));
 
     $handler->expects($this->once())
             ->method('checkData')
@@ -55,7 +55,7 @@ class Unit_Barzahlen_BarzahlenCallbackTest extends OxidTestCase {
     $handler->expects($this->never())
             ->method('updateRefund');
 
-    $callback = $this->getMock('barzahlen_callback', array('_getUpdateHandler', '_sendHeader'));
+    $callback = $this->getMock('bz_barzahlen_callback', array('_getUpdateHandler', '_sendHeader'));
 
     $callback->expects($this->once())
              ->method('_sendHeader')
@@ -74,7 +74,7 @@ class Unit_Barzahlen_BarzahlenCallbackTest extends OxidTestCase {
    */
   public function testRenderValidExpired() {
 
-    $handler = $this->getMock('barzahlen_update_handler', array('checkData', 'getState', 'updatePayment', 'updateRefund'));
+    $handler = $this->getMock('bz_barzahlen_update_handler', array('checkData', 'getState', 'updatePayment', 'updateRefund'));
 
     $handler->expects($this->once())
             ->method('checkData')
@@ -91,7 +91,7 @@ class Unit_Barzahlen_BarzahlenCallbackTest extends OxidTestCase {
     $handler->expects($this->never())
             ->method('updateRefund');
 
-    $callback = $this->getMock('barzahlen_callback', array('_getUpdateHandler', '_sendHeader'));
+    $callback = $this->getMock('bz_barzahlen_callback', array('_getUpdateHandler', '_sendHeader'));
 
     $callback->expects($this->once())
              ->method('_sendHeader')
@@ -110,7 +110,7 @@ class Unit_Barzahlen_BarzahlenCallbackTest extends OxidTestCase {
    */
   public function testRenderValidRefundCompleted() {
 
-    $handler = $this->getMock('barzahlen_update_handler', array('checkData', 'getState', 'updatePayment', 'updateRefund'));
+    $handler = $this->getMock('bz_barzahlen_update_handler', array('checkData', 'getState', 'updatePayment', 'updateRefund'));
 
     $handler->expects($this->once())
             ->method('checkData')
@@ -127,7 +127,7 @@ class Unit_Barzahlen_BarzahlenCallbackTest extends OxidTestCase {
             ->method('updateRefund')
             ->will($this->returnValue(null));
 
-    $callback = $this->getMock('barzahlen_callback', array('_getUpdateHandler', '_sendHeader'));
+    $callback = $this->getMock('bz_barzahlen_callback', array('_getUpdateHandler', '_sendHeader'));
 
     $callback->expects($this->once())
              ->method('_sendHeader')
@@ -146,7 +146,7 @@ class Unit_Barzahlen_BarzahlenCallbackTest extends OxidTestCase {
    */
   public function testRenderValidRefundExpired() {
 
-    $handler = $this->getMock('barzahlen_update_handler', array('checkData', 'getState', 'updatePayment', 'updateRefund'));
+    $handler = $this->getMock('bz_barzahlen_update_handler', array('checkData', 'getState', 'updatePayment', 'updateRefund'));
 
     $handler->expects($this->once())
             ->method('checkData')
@@ -163,7 +163,7 @@ class Unit_Barzahlen_BarzahlenCallbackTest extends OxidTestCase {
             ->method('updateRefund')
             ->will($this->returnValue(null));
 
-    $callback = $this->getMock('barzahlen_callback', array('_getUpdateHandler', '_sendHeader'));
+    $callback = $this->getMock('bz_barzahlen_callback', array('_getUpdateHandler', '_sendHeader'));
 
     $callback->expects($this->once())
              ->method('_sendHeader')
@@ -182,7 +182,7 @@ class Unit_Barzahlen_BarzahlenCallbackTest extends OxidTestCase {
    */
   public function testRenderInvalidRequest() {
 
-    $handler = $this->getMock('barzahlen_update_handler', array('checkData', 'getState', 'updatePayment', 'updateRefund'));
+    $handler = $this->getMock('bz_barzahlen_update_handler', array('checkData', 'getState', 'updatePayment', 'updateRefund'));
 
     $handler->expects($this->once())
             ->method('checkData')
@@ -197,7 +197,7 @@ class Unit_Barzahlen_BarzahlenCallbackTest extends OxidTestCase {
     $handler->expects($this->never())
             ->method('updateRefund');
 
-    $callback = $this->getMock('barzahlen_callback', array('_getUpdateHandler', '_sendHeader'));
+    $callback = $this->getMock('bz_barzahlen_callback', array('_getUpdateHandler', '_sendHeader'));
 
     $callback->expects($this->once())
              ->method('_sendHeader')
@@ -216,7 +216,7 @@ class Unit_Barzahlen_BarzahlenCallbackTest extends OxidTestCase {
    */
   public function testGetUpdateHandler() {
 
-    $oView = $this->getProxyClass('barzahlen_callback');
+    $oView = $this->getProxyClass('bz_barzahlen_callback');
     $oHandler = $oView->_getUpdateHandler();
 
     $this->assertAttributeEquals(SHOPID, '_sShopId', $oHandler);
@@ -231,4 +231,3 @@ class Unit_Barzahlen_BarzahlenCallbackTest extends OxidTestCase {
     unset($_SESSION['headerCode']);
   }
 }
-?>

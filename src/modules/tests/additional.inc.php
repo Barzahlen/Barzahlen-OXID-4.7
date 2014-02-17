@@ -19,12 +19,12 @@ oxTestModuleLoader::append( array(
 define('OXID_VERSION_EE', false);
 
 // sdk loader
-require_once getShopBasePath().'/modules/barzahlen/api/loader.php';
+require_once getShopBasePath().'/modules/bz_barzahlen/api/loader.php';
 
 // test cases settings
-define('SHOPID', '10345');
-define('PAYMENTKEY', '6dcbf0d746ee6fa996f240cd93860f5682b2b7fc');
-define('NOTIFICATIONKEY', '18de27b879961ef38396295e4fbc19b7d79e3bbd');
+define('SHOPID', '10000');
+define('PAYMENTKEY', '5c37177432e340946389f0c46c73b55e96a723dd');
+define('NOTIFICATIONKEY', '51b475b7cee1d05024f3c4fd53057662934eed58');
 
 // helper function to catch header code instead of sending out headers
 function catchHeader($code) {

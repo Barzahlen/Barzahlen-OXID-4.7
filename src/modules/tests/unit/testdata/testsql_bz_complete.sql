@@ -1,7 +1,7 @@
-UPDATE `oxconfig` SET `OXVARVALUE` = 0x07 WHERE `OXMODULE` = 'module:barzahlen' AND `OXVARNAME` = 'bzSandbox';
-UPDATE `oxconfig` SET `OXVARVALUE` = 0x07c4df7f80 WHERE `OXMODULE` = 'module:barzahlen' AND `OXVARNAME` = 'bzShopId';
-UPDATE `oxconfig` SET `OXVARVALUE` = 0x17d350d2f1a73747adf8d5c1af82d8897a4ddf67ea7518da8b83e2729eaa119ae085d336b9552a0f WHERE `OXMODULE` = 'module:barzahlen' AND `OXVARNAME` = 'bzPaymentKey';
-UPDATE `oxconfig` SET `OXVARVALUE` = 0x079aa9066501a4be2056be5abd23ea834ae01296f34272c4c74b63071c321ca8fd4b370c5a2004ab WHERE `OXMODULE` = 'module:barzahlen' AND `OXVARNAME` = 'bzNotificationKey';
+UPDATE `oxconfig` SET `OXVARVALUE` = 0x07 WHERE `OXMODULE` = 'module:bz_barzahlen' AND `OXVARNAME` = 'bzSandbox';
+UPDATE `oxconfig` SET `OXVARVALUE` = 0x07c4b15904 WHERE `OXMODULE` = 'module:bz_barzahlen' AND `OXVARNAME` = 'bzShopId';
+UPDATE `oxconfig` SET `OXVARVALUE` = 0x5d7288a48e58dfc9e75fd7ae17732e9183b0796b622d40b72f58428d48814d0cd42ac1fe56cec5f7 WHERE `OXMODULE` = 'module:bz_barzahlen' AND `OXVARNAME` = 'bzPaymentKey';
+UPDATE `oxconfig` SET `OXVARVALUE` = 0x5d193f2bfe74f9146936824c7574cfbf2df08c322f550cde698bb43834c00f6c88d12e5863b908b6 WHERE `OXMODULE` = 'module:bz_barzahlen' AND `OXVARNAME` = 'bzNotificationKey';
 
 ALTER TABLE `oxorder`
 ADD `BZTRANSACTION` INT( 11 ) NOT NULL DEFAULT 0,

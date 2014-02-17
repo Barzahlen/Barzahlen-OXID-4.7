@@ -21,38 +21,45 @@
  * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  */
 
-class Unit_Barzahlen_BarzahlenThankyouTest extends OxidTestCase {
+/**
+ * ThankYou View Controller Extension
+ * If Barzahlen was choosen the payment slip information will be added to the
+ * final checkout success page.
+ */
+class bz_barzahlen_thankyou extends bz_barzahlen_thankyou_parent {
 
   /**
-   * Lets run the render method.
+   * Additional Information Text 1.
+   *
+   * @var string
    */
-  public function testRender() {
+  protected $_sInfotextOne;
 
-    oxTestModules::addFunction('oxUtils', 'redirect', '{throw new Exception("REDIRECT");}');
+  /**
+   * Executes parent method parent::render().
+   * Grabs the payment information from the session.
+   */
+  public function init() {
 
-    $oView = new bz_barzahlen_thankyou;
-
-    try {
-      $oView->render();
-    }
-    catch (Exception $e) {
-      $this->assertEquals("REDIRECT", $e->getMessage());
-    }
+    parent::init();
+    $this->_sInfotextOne = $this->getSession()->getVar('barzahlenInfotextOne');
   }
 
   /**
-   * Testing initiation of the received payment information.
+   * Executes parent method parent::render() and unsets session variables.
    */
-  public function testInit() {
+  public function render() {
 
-    $oView = new bz_barzahlen_thankyou;
+    $this->getSession()->deleteVar('barzahlenInfotextOne');
+    return parent::render();
+  }
 
-    $oView->init();
-    $this->assertEquals('', $oView->getInfotextOne());
-
-    oxSession::setVar('barzahlenInfotextOne', 'Hallo <b>Welt</b>! <a href="http://www.barzahlen.de">Bar zahlen</a> Infütöxt Äinß');
-
-    $oView->init();
-    $this->assertEquals('Hallo <b>Welt</b>! <a href="http://www.barzahlen.de">Bar zahlen</a> Infütöxt Äinß', $oView->getInfotextOne());
+  /**
+   * Returns the infotext 1.
+   *
+   * @return string with infotext 1
+   */
+  public function getInfotextOne() {
+    return $this->_sInfotextOne;
   }
 }

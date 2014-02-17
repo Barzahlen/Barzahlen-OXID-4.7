@@ -173,4 +173,3 @@ class Unit_Barzahlen_ApiTest extends OxidTestCase {
     unset($this->api);
   }
 }
-?>

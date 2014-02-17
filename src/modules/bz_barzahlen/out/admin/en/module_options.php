@@ -1,6 +1,6 @@
 <?php
 /**
- * Barzahlen Payment Module SDK
+ * Barzahlen Payment Module (OXID eShop)
  *
  * NOTICE OF LICENSE
  *
@@ -21,14 +21,18 @@
  * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  */
 
-class Unit_Barzahlen_ExceptionTest extends OxidTestCase {
-
-  /**
-   * Testing the correct output.
-   */
-  public function testToString() {
-
-    $exception = new Barzahlen_Exception('An error occurred.', 42);
-    $this->assertEquals("Barzahlen_Exception: [42] - An error occurred.\n", $exception->__toString());
-  }
-}
+$sLangName  = "English";
+$aLang = array(
+'charset' => 'UTF-8',
+'SHOP_MODULE_GROUP_main' => 'Barzahlen Settings',
+'SHOP_MODULE_bzSandbox' => 'Sandbox',
+'HELP_SHOP_MODULE_bzSandbox' => 'Activate the test mode to process Barzahlen payments via sandbox.',
+'SHOP_MODULE_bzShopId' => 'Shop ID',
+'HELP_SHOP_MODULE_bzShopId' => 'Your Barzahlen Shop ID (https://partner.barzahlen.de/)',
+'SHOP_MODULE_bzPaymentKey' => 'Payment Key',
+'HELP_SHOP_MODULE_bzPaymentKey' => 'Your Barzahlen Payment Key (https://partner.barzahlen.de/)',
+'SHOP_MODULE_bzNotificationKey' => 'Notification Key',
+'HELP_SHOP_MODULE_bzNotificationKey' => 'Your Barzahlen Notification Key (https://partner.barzahlen.de/)',
+'SHOP_MODULE_bzDebug' => 'Extended Logging',
+'HELP_SHOP_MODULE_bzDebug' => 'Activate debugging for additional logging.'
+);

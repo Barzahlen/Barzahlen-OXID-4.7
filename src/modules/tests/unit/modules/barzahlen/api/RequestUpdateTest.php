@@ -30,10 +30,10 @@ class Unit_Barzahlen_RequestUpdateTest extends OxidTestCase {
 
     $update = new Barzahlen_Request_Update('7691945','42');
 
-    $requestArray = array('shop_id' => '10345',
+    $requestArray = array('shop_id' => '10000',
                           'transaction_id' => '7691945',
                           'order_id' => '42',
-                          'hash' => '3a8e4b181150392502e7279b1c903fe6839ea980fa310b7c4d2028b2b7b36c8a9bc630000161b76d359d64bba222ea0cec63b0afdbdfa6a36c0157310982d0c7');
+                          'hash' => '14a775f7b0ef99104ad32ac6266e062c06ac072347a8cb8f733439ecb4b663b92fecc764d0a427bc1b6ba029e9d6b9ca17c4ee212c236cd542dc6b8b6079db6a');
 
     $this->assertEquals($requestArray, $update->buildRequestArray(SHOPID, PAYMENTKEY, 'de'));
   }
@@ -47,7 +47,7 @@ class Unit_Barzahlen_RequestUpdateTest extends OxidTestCase {
                     <response>
                       <transaction-id>7691945</transaction-id>
                       <result>0</result>
-                      <hash>01a7027be0b36bfaf19cca529652daf6fdb2d9d7537c2d627666f2b7f438b3e382ad5a6d7fdccafca1d1ec30dbde94292695ac67d021616ea98b782442c16c8d</hash>
+                      <hash>fd3cff5618102852221d94b6fa30959e6a2403993f2c39524c6389ad2f15443a2ba684c0d4965df93cc53fb204be1495653e7663c492070a365360929d6a00ef</hash>
                     </response>';
 
     $update = new Barzahlen_Request_Update('7691945','42');
@@ -158,4 +158,3 @@ class Unit_Barzahlen_RequestUpdateTest extends OxidTestCase {
     $this->assertEquals('update', $update->getRequestType());
   }
 }
-?>

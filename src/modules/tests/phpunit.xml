@@ -1,19 +1,19 @@
 <phpunit colors="true">
-         
+
   <testsuite name="oxidbarzahlen">
     <directory phpVersion="5.3.14" phpVersionOperator=">=">./</directory>
   </testsuite>
 
   <filter>
     <whitelist>
-      <directory suffix=".php">../barzahlen/api</directory>
-      <directory suffix=".php">../barzahlen/controllers</directory>
-      <directory suffix=".php">../barzahlen/models</directory>
+      <directory suffix=".php">../bz_barzahlen/api</directory>
+      <directory suffix=".php">../bz_barzahlen/controllers</directory>
+      <directory suffix=".php">../bz_barzahlen/models</directory>
     </whitelist>
   </filter>
 
   <logging>
     <log type="coverage-html" target="cover" charset="UTF-8" yui="true" highlight="true" lowUpperBound="35" highLowerBound="70"/>
   </logging>
-  
+
 </phpunit>
