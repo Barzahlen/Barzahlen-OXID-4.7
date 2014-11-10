@@ -71,8 +71,8 @@ class bz_barzahlen_payment_gateway extends bz_barzahlen_payment_gateway_parent
         $oPayment = $this->_connectBarzahlenApi($oRequest, $oOrder->getOrderLanguage());
 
         if ($oPayment->isValid()) {
-            $this->getSession()->setVar('barzahlenPaymentSlipLink', (string) $oPayment->getPaymentSlipLink());
-            $this->getSession()->setVar('barzahlenInfotextOne', (string) $oPayment->getInfotext1());
+            $this->getSession()->setVariable('barzahlenPaymentSlipLink', (string) $oPayment->getPaymentSlipLink());
+            $this->getSession()->setVariable('barzahlenInfotextOne', (string) $oPayment->getInfotext1());
             $oOrder->oxorder__bztransaction = new oxField((int) $oPayment->getTransactionId());
             $oOrder->oxorder__bzstate = new oxField('pending');
             $oOrder->save();

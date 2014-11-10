@@ -55,9 +55,9 @@ $aModule = array(
         'bz_barzahlen_update_handler' => 'bz_barzahlen/models/bz_barzahlen_update_handler.php'
     ),
     'blocks' => array(
-        array('template' => 'page/checkout/payment.tpl',  'block' => 'select_payment',          'file' => 'out/blocks/page/checkout/payment/select_payment'),
-        array('template' => 'page/checkout/payment.tpl',  'block' => 'checkout_payment_errors', 'file' => 'out/blocks/page/checkout/payment/checkout_payment_errors'),
-        array('template' => 'page/checkout/thankyou.tpl', 'block' => 'checkout_thankyou_info',  'file' => 'out/blocks/page/checkout/thankyou/checkout_thankyou_info')
+        array('template' => 'page/checkout/payment.tpl',  'block' => 'select_payment',          'file' => 'views/blocks/page/checkout/payment/select_payment'),
+        array('template' => 'page/checkout/payment.tpl',  'block' => 'checkout_payment_errors', 'file' => 'views/blocks/page/checkout/payment/checkout_payment_errors'),
+        array('template' => 'page/checkout/thankyou.tpl', 'block' => 'checkout_thankyou_info',  'file' => 'views/blocks/page/checkout/thankyou/checkout_thankyou_info')
     ),
     'settings' => array(
         array('group' => 'main', 'name' => 'bzSandbox',         'type' => 'bool', 'value' => 'false'),
@@ -67,6 +67,6 @@ $aModule = array(
         array('group' => 'main', 'name' => 'bzDebug',           'type' => 'bool', 'value' => 'false')
     ),
     'templates' => array(
-        'bz_barzahlen_transactions.tpl' => 'bz_barzahlen/out/admin/tpl/bz_barzahlen_transactions.tpl'
+        'bz_barzahlen_transactions.tpl' => 'bz_barzahlen/views/admin/tpl/bz_barzahlen_transactions.tpl'
     )
 );

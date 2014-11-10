@@ -42,7 +42,7 @@ class bz_barzahlen_thankyou extends bz_barzahlen_thankyou_parent
     public function init()
     {
         parent::init();
-        $this->_sInfotextOne = $this->getSession()->getVar('barzahlenInfotextOne');
+        $this->_sInfotextOne = $this->getSession()->getVariable('barzahlenInfotextOne');
     }
 
     /**
@@ -50,7 +50,7 @@ class bz_barzahlen_thankyou extends bz_barzahlen_thankyou_parent
      */
     public function render()
     {
-        $this->getSession()->deleteVar('barzahlenInfotextOne');
+        $this->getSession()->deleteVariable('barzahlenInfotextOne');
         return parent::render();
     }
 
