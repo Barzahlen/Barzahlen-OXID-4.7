@@ -1,4 +1,4 @@
-# Barzahlen Payment Module (OXID 4.7 - 4.8 / 5.0 - 5.1)
+# Barzahlen Payment Module (OXID 4.7 - 4.9 / 5.0 - 5.2)
 
 ## User Manual
 https://integration.barzahlen.de/de/shopsysteme/oxid/nutzerhandbuch-47
