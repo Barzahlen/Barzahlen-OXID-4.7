@@ -2,21 +2,7 @@
 /**
  * Barzahlen Payment Module (OXID eShop)
  *
- * NOTICE OF LICENSE
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 3 of the License
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see http://www.gnu.org/licenses/
- *
- * @copyright   Copyright (c) 2013 Zerebro Internet GmbH (http://www.barzahlen.de)
+ * @copyright   Copyright (c) 2014 Cash Payment Solutions GmbH (https://www.barzahlen.de)
  * @author      Alexander Diebler
  * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  */
@@ -51,6 +37,5 @@ $aLang = array(
     'BZ__STATE_EXPIRED' => 'abgelaufen',
     'BZ__STATE_COMPLETED' => 'abgeschlossen',
     'BZ__STATE_CANCELED' => 'storniert',
-    'BZ__PLUGIN_AVAILABLE' => 'Barzahlen Update: ',
-    'BZ__GET_NEW_PLUGIN' => 'Verf&uuml;gbar auf <a href="http://www.barzahlen.de/partner/integration/shopsysteme/4/oxid-eshop" target="_blank">Barzahlen.de</a> oder im <a href="http://exchange.oxid-esales.com/startseite/" target="_blank">OXID eXchange</a>.'
+    'BZ__NEW_PLUGIN_AVAILABLE' => 'Version %1$s f&uuml;r Barzahlen.de-Plugin verf&uuml;gbar unter: <a href="%2$s" style="font-size: 1em; color: #333;" target="_blank">%2$s</a>'
 );

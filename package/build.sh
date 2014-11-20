@@ -1,5 +1,5 @@
 #!/bin/bash
-DST="barzahlen_oxid_4.7_5.0_plugin_v1.1.4"
+DST="barzahlen_oxid_4.7_5.0_plugin_v1.2.0"
 if [ -d $DST ]; then
 rm -R $DST
 fi

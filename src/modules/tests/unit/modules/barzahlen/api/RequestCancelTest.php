@@ -2,160 +2,146 @@
 /**
  * Barzahlen Payment Module SDK
  *
- * NOTICE OF LICENSE
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 3 of the License
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see http://www.gnu.org/licenses/
- *
- * @copyright   Copyright (c) 2012 Zerebro Internet GmbH (http://www.barzahlen.de)
+ * @copyright   Copyright (c) 2014 Cash Payment Solutions GmbH (https://www.barzahlen.de)
  * @author      Alexander Diebler
- * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @license     The MIT License (MIT) - http://opensource.org/licenses/MIT
  */
 
-class RequestCancelTest extends OxidTestCase {
+class RequestCancelTest extends PHPUnit_Framework_TestCase
+{
+    /**
+     * Testing the construction of a cancel request array.
+     */
+    public function testBuildRequestArray()
+    {
+        $cancel = new Barzahlen_Request_Cancel('7691945');
 
-  /**
-   * Testing the construction of a cancel request array.
-   */
-  public function testBuildRequestArray() {
+        $requestArray = array('shop_id' => '10483',
+            'transaction_id' => '7691945',
+            'language' => 'de',
+            'hash' => 'b344aebfb7b9c99c9894b096265f414cbd29223dd8314062fecdeedcd5e46b59f2906a7f5525b6564c85e42053063d49585ee1c108507304bc89b6e44623d44f');
 
-    $cancel = new Barzahlen_Request_Cancel('7691945');
+        $this->assertEquals($requestArray, $cancel->buildRequestArray(SHOPID, PAYMENTKEY, 'de'));
+    }
 
-    $requestArray = array('shop_id' => '10000',
-                          'transaction_id' => '7691945',
-                          'language' => 'de',
-                          'hash' => 'f92cf2dee2ddf8d5c8715202115e35024b1eeb2c73e841595ca05481c92a23197ceed4c0af5eddf942bb9206b7d5ff43882c240b42549e914f0551b3377040c1');
-
-    $this->assertEquals($requestArray, $cancel->buildRequestArray(SHOPID, PAYMENTKEY, 'de'));
-  }
-
-  /**
-   * Testing XML parsing with a valid response.
-   */
-  public function testParseXmlWithValidResponse() {
-
-    $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>
+    /**
+     * Testing XML parsing with a valid response.
+     */
+    public function testParseXmlWithValidResponse()
+    {
+        $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>
                     <response>
                       <transaction-id>7691945</transaction-id>
                       <result>0</result>
-                      <hash>fd3cff5618102852221d94b6fa30959e6a2403993f2c39524c6389ad2f15443a2ba684c0d4965df93cc53fb204be1495653e7663c492070a365360929d6a00ef</hash>
+                      <hash>d6b01ae78c6a7d1b6895b0cf08040095b5bd66c4f589556cfa591b956fa94bedfe032de843b17d36b7f865cb6689797cafa40c53815609217fa210e1b0ee9ee8</hash>
                     </response>';
 
-    $cancel = new Barzahlen_Request_Cancel('7691945');
-    $cancel->parseXml($xmlResponse, PAYMENTKEY);
+        $cancel = new Barzahlen_Request_Cancel('7691945');
+        $cancel->parseXml($xmlResponse, PAYMENTKEY);
 
-    $this->assertEquals('7691945', $cancel->getTransactionId());
-    $this->assertTrue($cancel->isValid());
-  }
+        $this->assertEquals('7691945', $cancel->getTransactionId());
+        $this->assertTrue($cancel->isValid());
+    }
 
-  /**
-   * Testing XML parsing with an error response.
-   *
-   * @expectedException Barzahlen_Exception
-   */
-  public function testParseXmlWithErrorResponse() {
-
-    $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>
+    /**
+     * Testing XML parsing with an error response.
+     *
+     * @expectedException Barzahlen_Exception
+     */
+    public function testParseXmlWithErrorResponse()
+    {
+        $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>
                     <response>
                       <result>6</result>
                       <error-message>transaction already paid</error-message>
                     </response>';
 
-    $cancel = new Barzahlen_Request_Cancel('7691945');
-    $cancel->parseXml($xmlResponse, PAYMENTKEY);
+        $cancel = new Barzahlen_Request_Cancel('7691945');
+        $cancel->parseXml($xmlResponse, PAYMENTKEY);
 
-    $this->assertFalse($cancel->isValid());
-  }
+        $this->assertFalse($cancel->isValid());
+    }
 
-  /**
-   * Testing XML parsing with an empty response.
-   *
-   * @expectedException Barzahlen_Exception
-   */
-  public function testParseXmlWithEmptyResponse() {
+    /**
+     * Testing XML parsing with an empty response.
+     *
+     * @expectedException Barzahlen_Exception
+     */
+    public function testParseXmlWithEmptyResponse()
+    {
+        $xmlResponse = '';
 
-    $xmlResponse = '';
+        $cancel = new Barzahlen_Request_Cancel('7691945');
+        $cancel->parseXml($xmlResponse, PAYMENTKEY);
 
-    $cancel = new Barzahlen_Request_Cancel('7691945');
-    $cancel->parseXml($xmlResponse, PAYMENTKEY);
+        $this->assertFalse($cancel->isValid());
+    }
 
-    $this->assertFalse($cancel->isValid());
-  }
-
-  /**
-   * Testing XML parsing with an incomplete response.
-   *
-   * @expectedException Barzahlen_Exception
-   */
-  public function testParseXmlWithIncompleteResponse() {
-
-    $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>
+    /**
+     * Testing XML parsing with an incomplete response.
+     *
+     * @expectedException Barzahlen_Exception
+     */
+    public function testParseXmlWithIncompleteResponse()
+    {
+        $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>
                     <response>
                       <transaction-id>7691945</transaction-id>
                       <hash>d6b01ae78c6a7d1b6895b0cf08040095b5bd66c4f589556cfa591b956fa94bedfe032de843b17d36b7f865cb6689797cafa40c53815609217fa210e1b0ee9ee8</hash>
                     </response>';
 
-    $cancel = new Barzahlen_Request_Cancel('7691945');
-    $cancel->parseXml($xmlResponse, PAYMENTKEY);
+        $cancel = new Barzahlen_Request_Cancel('7691945');
+        $cancel->parseXml($xmlResponse, PAYMENTKEY);
 
-    $this->assertFalse($cancel->isValid());
-  }
+        $this->assertFalse($cancel->isValid());
+    }
 
-  /**
-   * Testing XML parsing with an incorrect return value.
-   *
-   * @expectedException Barzahlen_Exception
-   */
-  public function testParseXmlWithInvalidResponse() {
-
-    $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>
+    /**
+     * Testing XML parsing with an incorrect return value.
+     *
+     * @expectedException Barzahlen_Exception
+     */
+    public function testParseXmlWithInvalidResponse()
+    {
+        $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>
                     <response>
                       <transaction-id>1234567</transaction-id>
                       <result>0</result>
                       <hash>d6b01ae78c6a7d1b6895b0cf08040095b5bd66c4f589556cfa591b956fa94bedfe032de843b17d36b7f865cb6689797cafa40c53815609217fa210e1b0ee9ee8</hash>
                     </response>';
 
-    $cancel = new Barzahlen_Request_Cancel('7691945');
-    $cancel->parseXml($xmlResponse, PAYMENTKEY);
+        $cancel = new Barzahlen_Request_Cancel('7691945');
+        $cancel->parseXml($xmlResponse, PAYMENTKEY);
 
-    $this->assertFalse($cancel->isValid());
-  }
+        $this->assertFalse($cancel->isValid());
+    }
 
-  /**
-   * Testing XML parsing with an invalid xml response.
-   *
-   * @expectedException Barzahlen_Exception
-   */
-  public function testParseXmlWithInvalidXML() {
-
-    $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>
+    /**
+     * Testing XML parsing with an invalid xml response.
+     *
+     * @expectedException Barzahlen_Exception
+     */
+    public function testParseXmlWithInvalidXML()
+    {
+        $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>
                     <response>
                       <transaction-id>7691945
                       <result>0
                       <hash>d6b01ae78c6a7d1b6895b0cf08040095b5bd66c4f589556cfa591b956fa94bedfe032de843b17d36b7f865cb6689797cafa40c53815609217fa210e1b0ee9ee8
                     </response>';
 
-    $cancel = new Barzahlen_Request_Cancel('7691945');
-    $cancel->parseXml($xmlResponse, PAYMENTKEY);
+        $cancel = new Barzahlen_Request_Cancel('7691945');
+        $cancel->parseXml($xmlResponse, PAYMENTKEY);
 
-    $this->assertFalse($cancel->isValid());
-  }
+        $this->assertFalse($cancel->isValid());
+    }
 
-  /**
-   * Tests that the right request type is returned.
-   */
-  public function testGetRequestType() {
-
-    $cancel = new Barzahlen_Request_Cancel('7691945');
-    $this->assertEquals('cancel', $cancel->getRequestType());
-  }
+    /**
+     * Tests that the right request type is returned.
+     */
+    public function testGetRequestType()
+    {
+        $cancel = new Barzahlen_Request_Cancel('7691945');
+        $this->assertEquals('cancel', $cancel->getRequestType());
+    }
 }

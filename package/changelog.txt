@@ -1,3 +1,8 @@
+==1.2.0 (20.11.2014)==
+* updated Barzahlen PHP API SDK (1.1.7)
+* callback returns 200 (OK) only after successful database update
+* improved payment selection
+
 ==1.1.4 (15.05.2013)==
 * updated Barzahlen PHP API SDK
 * added automatic payment slip cancelation on order cancelation

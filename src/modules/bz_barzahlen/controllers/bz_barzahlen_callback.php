@@ -2,21 +2,7 @@
 /**
  * Barzahlen Payment Module (OXID eShop)
  *
- * NOTICE OF LICENSE
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 3 of the License
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see http://www.gnu.org/licenses/
- *
- * @copyright   Copyright (c) 2013 Zerebro Internet GmbH (http://www.barzahlen.de)
+ * @copyright   Copyright (c) 2014 Cash Payment Solutions GmbH (https://www.barzahlen.de)
  * @author      Alexander Diebler
  * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  */
@@ -46,6 +32,11 @@ class bz_barzahlen_callback extends oxView
     const STATE_REFUND_EXPIRED = "refund_expired";
 
     /**
+     * Log file
+     */
+    const LOGFILE = "barzahlen.log";
+
+    /**
      * Kicks off the notification process and sends out the header after a
      * successful or not successful hash validation.
      *
@@ -57,21 +48,32 @@ class bz_barzahlen_callback extends oxView
 
         $oUpdateHandler = $this->_getUpdateHandler();
 
-        if ($oUpdateHandler->checkData($_GET)) {
-
-            $this->_sendHeader(self::STATUS_OK);
-            $state = $oUpdateHandler->getState();
-
-            if ($state == self::STATE_PAID || $state == self::STATE_EXPIRED) {
-                $oUpdateHandler->updatePayment();
-            } elseif ($state == self::STATE_REFUND_COMPLETED || $state == self::STATE_REFUND_EXPIRED) {
-                $oUpdateHandler->updateRefund();
-            }
-        } else {
+        if (!$oUpdateHandler->checkData($_GET)) {
             $this->_sendHeader(self::STATUS_BAD_REQUEST);
             return;
         }
 
+        switch($oUpdateHandler->getState()) {
+            case self::STATE_PAID:
+            case self::STATE_EXPIRED:
+                $success = $oUpdateHandler->updatePayment();
+                break;
+            case self::STATE_REFUND_COMPLETED:
+            case self::STATE_REFUND_EXPIRED:
+                $success = $oUpdateHandler->updateRefund();
+                break;
+            default:
+                oxRegistry::getUtils()->writeToLog(date('c') . 'Notification failed: Unknown state - ' . $oUpdateHandler->getState() . "\r\r", self::LOGFILE);
+                $success = false;
+                break;
+        }
+
+        if (!$success) {
+            $this->_sendHeader(self::STATUS_BAD_REQUEST);
+            return;
+        }
+
+        $this->_sendHeader(self::STATUS_OK);
         return 'page/shop/start.tpl';
     }
 

@@ -17,10 +17,10 @@
 [{/if}]
 
 <div style="position: relative; float: left;">
-<h2><img src="https://cdn.barzahlen.de/images/barzahlen_logo.png" alt="[{oxmultilang ident="BZ__BARZAHLEN"}]"></h2>
+<h2><img src="https://cdn.barzahlen.de/images/checkout_barzahlen_logo.png" alt="[{oxmultilang ident="BZ__BARZAHLEN"}]"></h2>
 <div style="font-size: 1.1em; font-weight: bold; line-height: 1.5em; margin-left: 10px;">
-<img src="https://cdn.barzahlen.de/images/barzahlen_icon_website.png" width="16" height="16" alt="" style="vertical-align: -3px;"/>&nbsp;<a href="http://www.barzahlen.de" target="_blank">[{oxmultilang ident="BZ__WEBSITE"}]</a><br>
-<img src="https://cdn.barzahlen.de/images/barzahlen_icon_merchant_area.png" width="16" height="16" alt="" style="vertical-align: -3px;"/>&nbsp;<a href="https://www.barzahlen.de/merchant-area/" target="_blank">[{oxmultilang ident="BZ__MERCHANT_AREA"}]</a><br>
+<img src="https://cdn.barzahlen.de/images/barzahlen_icon_website.png" width="16" height="16" alt="" style="vertical-align: -3px;"/>&nbsp;<a href="https://www.barzahlen.de" target="_blank">[{oxmultilang ident="BZ__WEBSITE"}]</a><br>
+<img src="https://cdn.barzahlen.de/images/barzahlen_icon_merchant_area.png" width="16" height="16" alt="" style="vertical-align: -3px;"/>&nbsp;<a href="https://partner.barzahlen.de" target="_blank">[{oxmultilang ident="BZ__MERCHANT_AREA"}]</a><br>
 <img src="https://cdn.barzahlen.de/images/barzahlen_icon_support.png" width="16" height="16" alt="" style="vertical-align: -3px;"/>&nbsp;<a href="mailto:support@barzahlen.de">[{oxmultilang ident="BZ__SUPPORT"}]</a>
 </div>
 </div>
