@@ -11,7 +11,7 @@
           [{ oxmultilang ident="BZ__PAGE_CHECKOUT_PAYMENT_DESC" }]
           [{ oxmultilang ident="BZ__PAGE_CHECKOUT_PAYMENT_PAY_AT" }]&nbsp;
           [{section name=partner start=1 loop=11}]
-          <img src="https://cdn.barzahlen.de/images/barzahlen_partner_[{"%02d"|sprintf:$smarty.section.partner.index}].png" alt="" style="vertical-align: middle;" height="25px" />
+          <img src="https://cdn.barzahlen.de/images/barzahlen_partner_[{"%02d"|sprintf:$smarty.section.partner.index}].png" alt="" style="height: 1em; vertical-align: -0.1em;" />
           [{/section}]
         </div>
         <script src="https://cdn.barzahlen.de/js/selection.js"></script>
