@@ -8,7 +8,7 @@ Cash Payment Solutions GmbH
 bz
 
 ==Version==
-1.2.0
+1.2.1
 
 ==Link==
 https://www.barzahlen.de

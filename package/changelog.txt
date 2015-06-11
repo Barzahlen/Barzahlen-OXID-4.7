@@ -1,3 +1,7 @@
+==1.2.1 (11.06.2015)==
+* improved payment selection
+* updated to Barzahlen PHP SDK v1.1.8
+
 ==1.2.0 (20.11.2014)==
 * updated Barzahlen PHP API SDK (1.1.7)
 * callback returns 200 (OK) only after successful database update
